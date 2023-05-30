@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Inicia o buffer de saída
 
 header('Content-Type: text/html; charset=utf-8');
 include 'conexaoMysql.php';
@@ -12,15 +13,30 @@ if (isset($_POST['enviar'])) {
     $qu = mysqli_query($con, $s);
 
     if (mysqli_num_rows($qu) > 0) {
-        $_SESSION['mensagem'] = 'Usuário já cadastrado!';
+        echo '
+        <div class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger">
+                <strong class="me-auto">ERRO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Usuário já cadastrado!
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
+
     } else {
         $i = "insert into usuarios (nome, email, senha) values ('$nome', '$email', '$senha')";
         mysqli_query($con, $i);
-        $_SESSION['mensagem'] = 'Usuário cadastrado com sucesso!';
+        $_SESSION['mensagem-sucesso'] = 'Usuário cadastrado com sucesso!';
+        header('Location: login.php');
+        exit;
     }
-
-    header('Location: login.php');
-    exit;
 }
 ?>
 

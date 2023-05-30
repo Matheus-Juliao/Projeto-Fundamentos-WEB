@@ -1,7 +1,7 @@
 <?php
     include 'conexaoMysql.php';
 
-    if (isset($_SESSION['mensagem'])) {
+    if (isset($_SESSION['mensagem-sucesso'])) {
         echo '
         <div class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header bg-success">
@@ -9,7 +9,7 @@
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                ' . $_SESSION['mensagem'] . '
+                ' . $_SESSION['mensagem-sucesso'] . '
             </div>
         </div>
         <script>
@@ -19,7 +19,8 @@
             });
         </script>';
     
-        unset($_SESSION['mensagem']); // Limpa a mensagem da sessão
+        unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
+
     }
 
     // is set 
