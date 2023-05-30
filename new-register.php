@@ -1,33 +1,30 @@
 <?php
+
 header('Content-Type: text/html; charset=utf-8');
 include 'conexaoMysql.php';
-//include 'checkLogin.php';
 
-if(isset($_POST['sub'])){
-    
-    $usuario=$_POST['nome'];
+if (isset($_POST['enviar'])) {
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-    $i = "insert into usuarios (nome) values ('$usuario')";
-    mysqli_query($con, $i);
+    $s = "select * from usuarios where email='$email'";
+    $qu = mysqli_query($con, $s);
+
+    if (mysqli_num_rows($qu) > 0) {
+        $_SESSION['mensagem'] = 'Usuário já cadastrado!';
+    } else {
+        $i = "insert into usuarios (nome, email, senha) values ('$nome', '$email', '$senha')";
+        mysqli_query($con, $i);
+        $_SESSION['mensagem'] = 'Usuário cadastrado com sucesso!';
+    }
+
+    header('Location: login.php');
+    exit;
 }
 ?>
 
-<?php
-    header('Content-Type: text/html; charset=utf-8');
-    include 'conexaoMysql.php';
-    if(isset($_POST['sub'])){
-        $n=$_POST['nome'];
-        $e=$_POST['email'];
-        $s=$_POST['senha'];
 
-        if($_FILES['f1']['name']){
-            move_uploaded_file($_FILES['f1']['tmp_name'], "image/".$_FILES['f1']['name']);
-            $img="image/".$_FILES['f1']['name'];
-        }
-        $i="insert into usuarios(nome,email,senha)value('$n','$e','$s')";
-        mysqli_query($con, $i);
-    }
-    ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,7 +46,7 @@ if(isset($_POST['sub'])){
                     <tr>
                         <td>
                             Nome
-                            <input type="text" name="user" style="width: 250px;">
+                            <input type="text" name="nome" style="width: 250px;">
                         </td>
                     </tr>
                     <tr>
@@ -61,12 +58,12 @@ if(isset($_POST['sub'])){
                     <tr>
                         <td>
                             Senha
-                            <input type="password" name="password" style="width: 250px;">
+                            <input type="password" name="senha" style="width: 250px;">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <button type="submit" name="submit" value="submit" class="btn mt-3"
+                            <button type="submit" name="enviar" value="submit" class="btn mt-3"
                                 style="float: right; border-color:#1c2d50;">CONFIRMAR</button>
                             <a href="login.php">
                                 <div class="btn mt-3" style="float: left; border-color:#1c2d50;">VOLTAR</div>
@@ -78,5 +75,8 @@ if(isset($_POST['sub'])){
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+</script>
 
 </html>

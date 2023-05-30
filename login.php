@@ -1,6 +1,27 @@
 <?php
     include 'conexaoMysql.php';
 
+    if (isset($_SESSION['mensagem'])) {
+        echo '
+        <div class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto">SUCCESSO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem'] . '
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
+    
+        unset($_SESSION['mensagem']); // Limpa a mensagem da sessão
+    }
+
     // is set 
     if (isset($_POST['enviar'])) {
         $nome = $_POST['nome'];
@@ -11,16 +32,16 @@
         if (mysqli_num_rows($qu) > 0) {
             $f = mysqli_fetch_assoc($qu);
             $_SESSION['id'] = $f['id'];
-            header('location:home.php');
+            header('location: home.php');
         } else {
             echo '
             <div class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header bg-danger ">
+                <div class="toast-header bg-danger">
                     <strong class="me-auto">ERROR</strong>
                     <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
-                    Username or password does not exist!
+                    Usuário ou senha incorreta!
                 </div>
             </div>
             <script>
