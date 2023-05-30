@@ -1,9 +1,14 @@
+
 CREATE TABLE usuarios (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(255),
   email VARCHAR(255),
   senha VARCHAR(255)
 );
+
+insert into usuarios (nome, email, senha) values ('adriano', 'adrianopinheiro2012@live.com', 123);
+delete from usuarios where id = '2';
+select * from usuarios;
 
 CREATE TABLE alunos (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -18,6 +23,7 @@ CREATE TABLE alunos (
 
 CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  nome_instrutor VARCHAR(255),
   usuário_id INT,
   especialização VARCHAR(255),
   telefone VARCHAR(255),
@@ -47,18 +53,17 @@ CREATE TABLE alunos_planos_de_treinamento (
   FOREIGN KEY (planos_de_treinamento_id) REFERENCES planos_de_treinamento(id)
 );
 
-
-SELECT a.id AS aluno_id, a.nome AS aluno_nome, pt.id AS planos_de_treinamento_id, pt.nome AS planos_de_treinamento_nome
+-- ALUNOS JOIN USUÁRIOS
+SELECT a.id AS aluno_id, a.nome_aluno, u.id AS usuario_id, u.nome AS usuario_nome, u.email
 FROM alunos AS a
-JOIN alunos_planos_de_treinamento AS apt ON a.id = apt.aluno_id
-JOIN planos_de_treinamento AS pt ON apt.planos_de_treinamento_id = pt.id;
+JOIN usuarios AS u ON a.usuário_id = u.id;
 
-SELECT c.id AS class_id, c.name AS class_name, i.id AS instructor_id, i.name AS instructor_name
-FROM classes AS c
-JOIN instructors AS i ON c.instructor_id = i.id;
+-- instrutores JOIN usuarios
+SELECT i.id AS instrutor_id, i.nome_instrutor, u.id AS usuario_id, u.nome AS usuario_nome, u.email
+FROM instrutores AS i
+JOIN usuarios AS u ON i.usuário_id = u.id;
 
-SELECT s.id AS student_id, s.name AS student_name, tp.id AS training_plan_id, tp.name AS training_plan_name, i.id AS instructor_id, i.name AS instructor_name
-FROM students AS s
-JOIN students_training_plans AS stp ON s.id = stp.student_id
-JOIN training_plans AS tp ON stp.training_plan_id = tp.id
-JOIN instructors AS i ON tp.instructor_id = i.id;
+-- planos_de_treinamento JOIN instrutores
+SELECT p.id AS plano_id, p.nome AS plano_nome, p.descrição AS plano_descrição, i.id AS instrutor_id, i.nome_instrutor
+FROM planos_de_treinamento AS p
+JOIN instrutores AS i ON p.instrutor_id = i.id;
