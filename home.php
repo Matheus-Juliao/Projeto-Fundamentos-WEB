@@ -38,8 +38,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -50,7 +49,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" class="nav-link">Home</a>
+                    <a href="home.php" class="nav-link">Home</a>
                 </li>
             </ul>
         </nav>
@@ -87,7 +86,7 @@
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
@@ -100,7 +99,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>  
+                                        <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
@@ -142,7 +141,8 @@
 
                                     <p>Gerenciar Alunos</p>
                                 </div>
-                                <a href="#" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                                <a href="students.php" class="small-box-footer">Clique aqui<i
+                                        class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
 
@@ -188,6 +188,14 @@
         </div>
     </div>
     <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 1.0.0
+        </div>
+        <strong>Copyright &copy; 2023 <a href="#">Biofitness</a>.</strong> All rights
+        reserved.
+    </footer>
 
 </body>
 
