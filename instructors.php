@@ -1,38 +1,20 @@
-
-<?php include 'C:\xampp\htdocs\FundamentosWeb\ProjetoWeb\Projeto-Fundamentos-WEB/students_inserts.php';
-
-if (isset($_GET["success"]) && $_GET["success"] == 0) {
-    if (isset($_GET["message"])) {
-        $message = $_GET["message"];
-        echo $message;
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>AdminLTE 3 | Simple Tables</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Simple Tables</title>
 
-        <!-- Google Font: Source Sans Pro -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-        <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
-
-        <!-- Students CSS -->
-        <link rel="stylesheet" href="C:\xampp\htdocs\FundamentosWeb\ProjetoWeb\Projeto-Fundamentos-WEB/css/students.css">
-
-        <!-- Theme style -->
-        <link rel="stylesheet" href="dist/css/adminlte.min.css">
-
-        <link rel="stylesheet" href="css/students.css">
-        
-    </head>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -43,6 +25,7 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -52,6 +35,8 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                 </li>
             </ul>
         </nav>
+        <!-- /.navbar -->
+
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -78,22 +63,24 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="students.php" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
@@ -115,42 +102,25 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                         </li>
                     </ul>
                 </nav>
+                <!-- /.sidebar-menu -->
             </div>
+            <!-- /.sidebar -->
+
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper" style="margin-top: 20px;">
+        <div class="content-wrapper">
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <div class="row justify-content-center">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Alunos</h3>
+                                    <h3 class="card-title">Instrutores</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body table-responsive p-0">
-
-                                <form method="POST" action="students_inserts.php" class="formulario">
-                                    <!-- Novo campo para o nome do aluno -->
-                                    <input type="text" name="nome_aluno" placeholder="Nome do aluno">
-                                    <input type="text" name="idade" placeholder="Idade">
-
-                                    <select name="genero" class="genero-select">
-                                        <option value="">Gênero</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="feminino">Feminino</option>
-                                    </select>
-
-                                    <input type="text" name="telefone" placeholder="Telefone">
-                                    <input type="text" name="endereco" placeholder="Endereço">
-
-                                    <!-- Botão para adicionar -->
-                                    <button type="submit">Adicionar</button>
-                                </form>
-
-
                                     <table class="table table-hover text-nowrap">
                                         <thead>
                                             <tr>
@@ -158,33 +128,27 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                                                 <th>Deletar</th>
                                                 <th>ID</th>
                                                 <th>Nome</th>
-                                                <th>Idade</th>
-                                                <th>Genero</th>
+                                                <th>Especialização</th>
                                                 <th>Telefone</th>
                                                 <th>Endereço</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo "<tr>";
-                                                    echo "<td><a class='btn btn-primary' href='students_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
-                                                    echo "<td><a class='btn btn-danger' href='students_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-                                                    echo "<td>" . $row['id'] . "</td>";
-                                                    echo "<td>" . $row['nome_aluno'] . "</td>";
-                                                    echo "<td>" . $row['idade'] . "</td>";
-                                                    echo "<td>" . $row['genero'] . "</td>";
-                                                    echo "<td>" . $row['telefone'] . "</td>";
-                                                    echo "<td>" . $row['endereco'] . "</td>";
-                                                    echo "</tr>";
-                                                }
-                                            } else {
-                                                echo "<tr><td colspan='8'>Nenhum aluno encontrado na tabela.</td></tr>";
-                                            }
-                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <a class="btn btn-primary"
+                                                        href="delete_cliente.php?id_cliente=<?php echo $dados['id_cliente'];?>">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-danger"
+                                                        href="delete_cliente.php?id_cliente=<?php echo $dados['id_cliente'];?>">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                         </tbody>
-
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

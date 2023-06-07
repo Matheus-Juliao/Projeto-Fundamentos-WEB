@@ -92,7 +92,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
@@ -154,7 +154,7 @@
 
                                     <p>Gerenciar Aulas</p>
                                 </div>
-                                <a href="#" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                                <a href="classes.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
 
@@ -166,7 +166,7 @@
 
                                     <p>Gerenciar Instrutores</p>
                                 </div>
-                                <a href="#" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                                <a href="instructors.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
 
@@ -178,7 +178,7 @@
 
                                     <p>Gerenciar Planos de Treinamento</p>
                                 </div>
-                                <a href="#" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                                <a href="plans.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
                     </div>

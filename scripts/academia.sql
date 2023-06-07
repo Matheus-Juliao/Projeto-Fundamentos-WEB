@@ -12,36 +12,38 @@ select * from usuarios;
 
 CREATE TABLE alunos (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_aluno VARCHAR(25),
+  nome_aluno VARCHAR(25) UNIQUE,
   usuário_id INT,
-  idade INT,
-  genero VARCHAR(10),
-  telefone VARCHAR(255),
-  endereço VARCHAR(255),
+  idade INT NOT NULL,
+  genero VARCHAR(10) NOT NULL,
+  telefone VARCHAR(255) NOT NULL,
+  endereco VARCHAR(255) NOT NULL,
   FOREIGN KEY (usuário_id) REFERENCES usuarios(id)
 );
 
+select * from alunos;
+
 CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_instrutor VARCHAR(255),
+  nome_instrutor VARCHAR(255) UNIQUE,
   usuário_id INT,
-  especialização VARCHAR(255),
-  telefone VARCHAR(255),
-  endereço VARCHAR(255),
+  especialização VARCHAR(255) NOT NULL,
+  telefone VARCHAR(255) NOT NULL,
+  endereço VARCHAR(255) NOT NULL,
   FOREIGN KEY (usuário_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE planos_de_treinamento (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255),
-  descrição TEXT,
+  nome VARCHAR(255) NOT NULL,
+  descrição TEXT NOT NULL,
   instrutor_id INT,
   FOREIGN KEY (instrutor_id) REFERENCES instrutores(id)
 );
 
 CREATE TABLE aulas (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255),
+  nome VARCHAR(255) NOT NULL,
   instrutor_id INT,
   FOREIGN KEY (instrutor_id) REFERENCES instrutores(id)
 );

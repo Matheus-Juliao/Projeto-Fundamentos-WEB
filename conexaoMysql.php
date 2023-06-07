@@ -1,6 +1,16 @@
-<?php 
+<?php
+    session_start();
 
-session_start();
-//              servidor , usuario, senha, nome do banco de dados
-$con=  mysqli_connect("localhost","root","mysql","academia")
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "academia";
+
+    // Cria a conexão
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    // Verifica a conexão
+    if (!$conn) {
+        die("Falha na conexão: " . mysqli_connect_error());
+    }
 ?>

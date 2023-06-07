@@ -29,7 +29,7 @@
         $senha = $_POST['senha'];
 
         $s = "select * from usuarios where nome='$nome' and senha= '$senha'";
-        $qu = mysqli_query($con, $s);
+        $qu = mysqli_query($conn, $s);
         if (mysqli_num_rows($qu) > 0) {
             $f = mysqli_fetch_assoc($qu);
             $_SESSION['id'] = $f['id'];

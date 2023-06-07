@@ -10,7 +10,7 @@ if (isset($_POST['enviar'])) {
     $senha = $_POST['senha'];
 
     $s = "select * from usuarios where email='$email'";
-    $qu = mysqli_query($con, $s);
+    $qu = mysqli_query($conn, $s);
 
     if (mysqli_num_rows($qu) > 0) {
         echo '
@@ -32,7 +32,7 @@ if (isset($_POST['enviar'])) {
 
     } else {
         $i = "insert into usuarios (nome, email, senha) values ('$nome', '$email', '$senha')";
-        mysqli_query($con, $i);
+        mysqli_query($conn, $i);
         $_SESSION['mensagem-sucesso'] = 'Usuário cadastrado com sucesso!';
         header('Location: login.php');
         exit;
