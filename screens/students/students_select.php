@@ -1,12 +1,5 @@
 <?php
-require_once "conexaoMysql.php";
-
-// Conecta ao banco de dados (substitua as credenciais de conexão conforme o seu ambiente)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "academia";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+include '../../conexaoMysql.php';
 
 // Verifica se a conexão foi estabelecida com sucesso
 if ($conn->connect_error) {

@@ -1,11 +1,53 @@
 
-<?php include 'C:\xampp\htdocs\FundamentosWeb\ProjetoWeb\Projeto-Fundamentos-WEB/students_inserts.php';
+<?php include 'students_inserts.php';
 
 if (isset($_GET["success"]) && $_GET["success"] == 0) {
     if (isset($_GET["message"])) {
         $message = $_GET["message"];
         echo $message;
     }
+}
+
+if (isset($_SESSION['mensagem-sucesso'])) {
+    echo '
+    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success">
+            <strong class="me-auto">SUCESSO</strong>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ' . $_SESSION['mensagem-sucesso'] . '
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let toast = new bootstrap.Toast(document.querySelector(".toast"));
+            toast.show();
+        });
+    </script>';
+
+    unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
+}
+
+if (isset($_SESSION['mensagem-erro'])) {
+    echo '
+    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger">
+            <strong class="me-auto">ERRO</strong>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ' . $_SESSION['mensagem-erro'] . '
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let toast = new bootstrap.Toast(document.querySelector(".toast"));
+            toast.show();
+        });
+    </script>';
+
+    unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
 }
 
 ?>
@@ -21,16 +63,17 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-        <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../../../plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
         <!-- Students CSS -->
-        <link rel="stylesheet" href="C:\xampp\htdocs\FundamentosWeb\ProjetoWeb\Projeto-Fundamentos-WEB/css/students.css">
+        <link rel="stylesheet" href="../../css/students.css">
 
         <!-- Theme style -->
-        <link rel="stylesheet" href="dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
-        <link rel="stylesheet" href="css/students.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         
     </head>
 
@@ -38,7 +81,7 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__shake" src="../../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -48,7 +91,7 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="home.php" class="nav-link">Home</a>
+                    <a href="../../home.php" class="nav-link">Home</a>
                 </li>
             </ul>
         </nav>
@@ -57,7 +100,7 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
-                <img src="images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
+                <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
             </a>
@@ -119,32 +162,41 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper" style="margin-top: 20px;">
+        <div class="content-wrapper">
+
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Alunos</h1>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+            </section>
+
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Alunos</h3>
-                                </div>
                                 <!-- /.card-header -->
                                 <div class="card-body table-responsive p-0">
 
                                 <form method="POST" action="students_inserts.php" class="formulario">
                                     <!-- Novo campo para o nome do aluno -->
-                                    <input type="text" name="nome_aluno" placeholder="Nome do aluno">
-                                    <input type="text" name="idade" placeholder="Idade">
+                                    <input type="text" name="nome_aluno" placeholder="*Nome do aluno">
+                                    <input type="text" name="idade" placeholder="*Idade">
 
                                     <select name="genero" class="genero-select">
-                                        <option value="">Gênero</option>
+                                        <option value="">*Gênero</option>
                                         <option value="masculino">Masculino</option>
                                         <option value="feminino">Feminino</option>
                                     </select>
 
-                                    <input type="text" name="telefone" placeholder="Telefone">
-                                    <input type="text" name="endereco" placeholder="Endereço">
+                                    <input type="text" name="telefone" placeholder="*Telefone">
+                                    <input type="text" name="endereco" placeholder="*Endereço">
 
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
@@ -210,13 +262,16 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
+    <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
+    <script src="../../dist/js/demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+</script>
 </body>
 
 </html>

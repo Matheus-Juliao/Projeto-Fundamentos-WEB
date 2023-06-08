@@ -1,18 +1,13 @@
-
 CREATE TABLE usuarios (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255),
+  nome VARCHAR(255) UNIQUE,
   email VARCHAR(255),
   senha VARCHAR(255)
 );
 
-insert into usuarios (nome, email, senha) values ('adriano', 'adrianopinheiro2012@live.com', 123);
-delete from usuarios where id = '2';
-select * from usuarios;
-
 CREATE TABLE alunos (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_aluno VARCHAR(25) UNIQUE,
+  nome_aluno VARCHAR(25),
   usuário_id INT,
   idade INT NOT NULL,
   genero VARCHAR(10) NOT NULL,
@@ -21,11 +16,9 @@ CREATE TABLE alunos (
   FOREIGN KEY (usuário_id) REFERENCES usuarios(id)
 );
 
-select * from alunos;
-
 CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_instrutor VARCHAR(255) UNIQUE,
+  nome_instrutor VARCHAR(255),
   usuário_id INT,
   especialização VARCHAR(255) NOT NULL,
   telefone VARCHAR(255) NOT NULL,
@@ -55,6 +48,13 @@ CREATE TABLE alunos_planos_de_treinamento (
   FOREIGN KEY (planos_de_treinamento_id) REFERENCES planos_de_treinamento(id)
 );
 
+/*
+-- USADOS PARA DESENVOLVIMENTO
+insert into usuarios (nome, email, senha) values ('adriano', 'adrianopinheiro2012@live.com', 123);
+delete from usuarios where id = '2';
+select * from usuarios;
+select * from alunos;
+
 -- ALUNOS JOIN USUÁRIOS
 SELECT a.id AS aluno_id, a.nome_aluno, u.id AS usuario_id, u.nome AS usuario_nome, u.email
 FROM alunos AS a
@@ -69,3 +69,4 @@ JOIN usuarios AS u ON i.usuário_id = u.id;
 SELECT p.id AS plano_id, p.nome AS plano_nome, p.descrição AS plano_descrição, i.id AS instrutor_id, i.nome_instrutor
 FROM planos_de_treinamento AS p
 JOIN instrutores AS i ON p.instrutor_id = i.id;
+*/
