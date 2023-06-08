@@ -109,6 +109,12 @@
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="screens/dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
                                     <a href="logout.php" class="nav-link">
@@ -179,6 +185,18 @@
                                     <p>Gerenciar Planos de Treinamento</p>
                                 </div>
                                 <a href="plans.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>Dashboard</h3>
+
+                                    <p>Visualizar Dashboards</p>
+                                </div>
+                                <a href="screens/dashboard/" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
                     </div>
