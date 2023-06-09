@@ -6,9 +6,47 @@ if ($conn->connect_error) {
     die("Falha na conexão com o banco de dados: " . $conn->connect_error);
 }
 
+
+// Executa a consulta SQL
+$sql = "SELECT COUNT(*) as total_alunos FROM alunos";
+$result = $conn->query($sql);
+
+// Verifica se a consulta retornou algum resultado
+if ($result->num_rows > 0) {
+    // Obtém o número de alunos cadastrados
+    $row = $result->fetch_assoc();
+    $totalAlunos = $row["total_alunos"];
+} else {
+    $totalAlunos = 0;
+}
+
+
+
+// Consulta SQL para obter os dados da tabela t_inscrições
+$sqlinsc = "SELECT COUNT(*) as total, status FROM t_inscrições GROUP BY status";
+
+// Executar a consulta
+$resultinsc = $conn->query($sqlinsc);
+
+// Array para armazenar os rótulos
+$labels = array();
+// Array para armazenar os dados
+$data = array();
+
+// Verificar se a consulta retornou resultados
+if ($resultinsc->num_rows > 0) {
+    // Percorrer os resultados e armazenar os valores nas arrays
+    while ($rowinsc = $resultinsc->fetch_assoc()) {
+        $labels[] = $rowinsc["status"];
+        $data[] = $rowinsc["total"];
+    }
+}
+
+
 // Executa a consulta SQL para selecionar os registros da tabela de alunos
 // $sql = "SELECT * FROM alunos";
 // $result = $conn->query($sql);
+
 
 // Verifica se a consulta retornou algum resultado
 // if ($result->num_rows > 0) {
