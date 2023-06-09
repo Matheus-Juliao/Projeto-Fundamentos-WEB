@@ -1,10 +1,65 @@
+
+
+<?php
+include '../../conexaoMysql.php';
+
+// Verifica se os dados foram enviados através do método POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recupera os dados do formulário
+    $id = $_POST["id"];
+    $nome = $_POST["nome_instrutor"];
+    $idade = $_POST["idade"];
+    $genero = $_POST["genero"];
+    $telefone = $_POST["telefone"];
+    $endereco = $_POST["endereco"];
+    $especialização = $_POST["especialização"];
+
+    // Verifica se algum dos campos obrigatórios está vazio
+    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especialização)) {
+        $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
+        exit();
+    }
+
+    // Verifica se a conexão foi estabelecida com sucesso
+    if ($conn->connect_error) {
+        die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+    }
+
+    // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
+    $sql = "UPDATE instrutores SET nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especialização='$especialização' WHERE id='$id'";
+    if ($conn->query($sql) === TRUE) {
+        $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
+        header('Location: instructors.php');
+        exit();
+    } else {
+        $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+    }
+}
+
+// Recupera o ID do aluno a ser atualizado da URL
+$id = $_GET["id"];
+
+// Recupera os dados do aluno a partir do ID
+$sql = "SELECT * FROM instrutores WHERE id='$id'";
+$result = $conn->query($sql);
+
+// Verifica se o aluno existe
+if ($result->num_rows > 0) {
+    $instrutores = $result->fetch_assoc();
+} else {
+    echo "Instrutor não encontrado.";
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="../../css/instructors.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
@@ -12,25 +67,25 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
-    <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
-    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -38,7 +93,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__shake" src="../../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -49,7 +104,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="home.php" class="nav-link">Home</a>
+                    <a href="../../home.php" class="nav-link">Home</a>
                 </li>
             </ul>
         </nav>
@@ -60,7 +115,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
-                <img src="images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
+                <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
             </a>
@@ -86,7 +141,7 @@
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="screens/students/students.php" class="nav-link">
+                                    <a href="students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
@@ -98,13 +153,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="screens/instructors/instructors.php" class="nav-link">
+                                    <a href="instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="screens/plans/plans.php" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
                                     </a>
@@ -131,57 +186,17 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->
-                    <div class="row">
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>Alunos</h3>
-
-                                    <p>Gerenciar Alunos</p>
-                                </div>
-                                <a href="screens/students/students.php" class="small-box-footer">Clique aqui<i
-                                        class="fa-solid fa-person"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>Aulas</h3>
-
-                                    <p>Gerenciar Aulas</p>
-                                </div>
-                                <a href="classes.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>Instrutores</h3>
-
-                                    <p>Gerenciar Instrutores</p>
-                                </div>
-                                <a href="screens/instructors/instructors.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>Planos</h3>
-
-                                    <p>Gerenciar Planos de Treinamento</p>
-                                </div>
-                                <a href="screens/plans/plans.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                <h2>Atualizar Instrutor</h2>
+                    <form method="POST" action="">
+                        <input type="hidden" name="id" value="<?php echo $instrutores['id']; ?>">
+                        Nome: <input type="text" name="nome_instrutor" value="<?php echo $instrutores['nome_instrutor']; ?>">
+                        Idade: <input type="text" name="idade" value="<?php echo $instrutores['idade']; ?>">
+                        Gênero: <input type="text" name="genero" value="<?php echo $instrutores['genero']; ?>">
+                        Telefone: <input type="text" name="telefone" value="<?php echo $instrutores['telefone']; ?>">
+                        Endereço: <input type="text" name="endereco" value="<?php echo $instrutores['endereco']; ?>">
+                        Especialização: <input type="text" name="especialização" value="<?php echo $instrutores['especialização']; ?>">
+                        <input type="submit" value="Atualizar">
+                    </form>
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
@@ -204,38 +219,38 @@
 </script>
 
 <!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+<script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="../../plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
 $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
+<script src="../../plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
-<script src="plugins/sparklines/sparkline.js"></script>
+<script src="../../plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="../../plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="../../plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 <!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="../../plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../../plugins/moment/moment.min.js"></script>
+<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
-<script src="plugins/summernote/summernote-bs4.min.js"></script>
+<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.js"></script>
+<script src="../../dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+<script src="../../dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+<script src="../../dist/js/pages/dashboard.js"></script>
 
 </html>

@@ -1,8 +1,8 @@
 CREATE TABLE usuarios (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255) UNIQUE,
-  email VARCHAR(255),
-  senha VARCHAR(255)
+  nome VARCHAR(50) UNIQUE,
+  email VARCHAR(50),
+  senha VARCHAR(20)
 );
 
 CREATE TABLE alunos (
@@ -11,32 +11,35 @@ CREATE TABLE alunos (
   usuário_id INT,
   idade INT NOT NULL,
   genero VARCHAR(10) NOT NULL,
-  telefone VARCHAR(255) NOT NULL,
-  endereco VARCHAR(255) NOT NULL,
+  telefone VARCHAR(20) NOT NULL,
+  endereco VARCHAR(50) NOT NULL,
   FOREIGN KEY (usuário_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_instrutor VARCHAR(255),
+  nome_instrutor VARCHAR(20),
+  idade INT NOT NULL,
   usuário_id INT,
-  especialização VARCHAR(255) NOT NULL,
-  telefone VARCHAR(255) NOT NULL,
-  endereço VARCHAR(255) NOT NULL,
+  genero VARCHAR(10) NOT NULL,
+  telefone VARCHAR(20) NOT NULL,
+  endereco VARCHAR(50) NOT NULL,
+  especialização VARCHAR(25) NOT NULL,
   FOREIGN KEY (usuário_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE planos_de_treinamento (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255) NOT NULL,
+  nome VARCHAR(20) NOT NULL,
   descrição TEXT NOT NULL,
+  valor decimal(5,2),
   instrutor_id INT,
   FOREIGN KEY (instrutor_id) REFERENCES instrutores(id)
 );
 
 CREATE TABLE aulas (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255) NOT NULL,
+  nome VARCHAR(20) NOT NULL,
   instrutor_id INT,
   FOREIGN KEY (instrutor_id) REFERENCES instrutores(id)
 );
@@ -54,6 +57,18 @@ insert into usuarios (nome, email, senha) values ('adriano', 'adrianopinheiro201
 delete from usuarios where id = '2';
 select * from usuarios;
 select * from alunos;
+select * from instrutores;
+select * from planos_de_treinamento;
+
+-- Dropar todas as tabelas caso existam:
+DROP TABLE IF EXISTS alunos_planos_de_treinamento;
+DROP TABLE IF EXISTS aulas;
+DROP TABLE IF EXISTS planos_de_treinamento;
+DROP TABLE IF EXISTS instrutores;
+DROP TABLE IF EXISTS alunos;
+DROP TABLE IF EXISTS usuarios;
+
+
 
 -- ALUNOS JOIN USUÁRIOS
 SELECT a.id AS aluno_id, a.nome_aluno, u.id AS usuario_id, u.nome AS usuario_nome, u.email
@@ -70,3 +85,7 @@ SELECT p.id AS plano_id, p.nome AS plano_nome, p.descrição AS plano_descriçã
 FROM planos_de_treinamento AS p
 JOIN instrutores AS i ON p.instrutor_id = i.id;
 */
+
+
+
+
