@@ -112,7 +112,7 @@
                                 <li class="nav-item">
                                     <a href="screens/dashboard/dashboard.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard</p>
+                                        <p>Dashboards</p>
                                     </a>
                                 </li>
                                 <hr>
@@ -192,7 +192,7 @@
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3>Dashboard</h3>
+                                    <h3>Dashboards</h3>
 
                                     <p>Visualizar Dashboards</p>
                                 </div>

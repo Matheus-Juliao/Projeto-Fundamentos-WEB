@@ -130,7 +130,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../students/students.php" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
@@ -145,6 +145,12 @@ if (isset($_SESSION['mensagem-erro'])) {
                                     <a href="../training-plans/training-plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="screens/dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
                                     </a>
                                 </li>
                                 <hr>
