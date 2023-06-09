@@ -46,6 +46,7 @@ $result1 = $conn->query($sql1);
 if ($result->num_rows > 0) {
     $aula = $result->fetch_assoc();
     $instrutor_id = $aula['instrutor_id'];
+    $aulaSelecionada = $aula['aula'];
 } else {
     $_SESSION['mensagem-erro'] = 'Aula não encontrada!';
     exit();
@@ -189,8 +190,18 @@ if ($result->num_rows > 0) {
                 <h2>Atualizar Aulas</h2>
                     <form method="POST" action="">
                         <input type="hidden" name="id" value="<?php echo $aula['id']; ?>">
-                        Aula: <input type="text" name="aula" value="<?php echo $aula['aula']; ?>">
-                        <select name="id_instrutor" id="instrutores">
+                        Nome da Aula:   <select name="aula">
+                                            <option value="Condicionamento físico"<?php if ($aulaSelecionada == 'Condicionamento físico') echo ' selected'; ?>>Condicionamento físico</option>
+                                            <option value="Emagrecimento"<?php if ($aulaSelecionada == 'Emagrecimento') echo ' selected'; ?>>Emagrecimento</option>
+                                            <option value="Musculação"<?php if ($aulaSelecionada == 'Musculação') echo ' selected'; ?>>Musculação</option>
+                                            <option value="Pilates"<?php if ($aulaSelecionada == 'Pilates') echo ' selected'; ?>>Pilates</option>
+                                            <option value="Treinamento de força"<?php if ($aulaSelecionada == 'Treinamento de força') echo ' selected'; ?>>Treinamento de força</option>
+                                            <option value="Treinamento funcional"<?php if ($aulaSelecionada == 'Treinamento funcional') echo ' selected'; ?>>Treinamento funcional</option>
+                                            <option value="Yoga"<?php if ($aulaSelecionada == 'Yoga') echo ' selected'; ?>>Yoga</option>
+                                            <option value="Zumba"<?php if ($aulaSelecionada == 'Zumba') echo ' selected'; ?>>Zumba</option>
+                                            <option value="Natação"<?php if ($aulaSelecionada == 'Natação') echo ' selected'; ?>>Natação</option>
+                                        </select>
+                        Instrutor: <select class="instrutor" name="id_instrutor" id="instrutores">
                             <?php
                             while ($instrutor = $result1->fetch_assoc()) {
                                 $selected = ($instrutor['id'] == $instrutor_id) ? 'selected' : '';

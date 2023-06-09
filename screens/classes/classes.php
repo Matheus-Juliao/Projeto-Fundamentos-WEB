@@ -213,8 +213,19 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 <div class="card-body table-responsive p-0">
 
                                 <form method="POST" action="classes_inserts.php" class="formulario">
-                                    <!-- Novo campo para o nome do aluno -->
-                                    <input type="text" name="aula" placeholder="*Nome da aula">
+
+                                    <select name="aula">
+                                        <option value="">*Nome da aula</option>
+                                        <option value="Condicionamento físico">Condicionamento físico</option>
+                                        <option value="Emagrecimento">Emagrecimento</option>
+                                        <option value="Musculação">Musculação</option>
+                                        <option value="Pilates">Pilates</option>
+                                        <option value="Treinamento de força">Treinamento de força</option>
+                                        <option value="Treinamento funcional">Treinamento funcional</option>
+                                        <option value="Yoga">Yoga</option>
+                                        <option value="Zumba">Zumba</option>
+                                        <option value="Natação">Natação</option>
+                                    </select>
 
                                     <select name="id_instrutor" id="instrutores">
                                         <option value="">*Instrutor</option>
