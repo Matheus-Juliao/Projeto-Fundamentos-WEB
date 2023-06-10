@@ -220,7 +220,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/instructors/instructors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -330,7 +330,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <h4>Plano 1</h4>
                                         <p>Musculação</p>
                                         <a class="ver-mais-link"
-                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/students/students.php"
+                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/training-plans/training-plans.php"
                                             class="small-box-footer">Ver mais <i
                                                 class="fas fa-arrow-circle-right"></i></a>
                                     </div>
@@ -341,7 +341,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <h4>Plano 2</h4>
                                         <p>Natação</p>
                                         <a class="ver-mais-link"
-                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/students/students.php"
+                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/training-plans/training-plans.php"
                                             class="small-box-footer">Ver mais <i
                                                 class="fas fa-arrow-circle-right"></i></a>
                                     </div>
@@ -352,7 +352,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <h4>Plano 3</h4>
                                         <p>Musculação e Natação</p>
                                         <a class="ver-mais-link"
-                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/students/students.php"
+                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/training-plans/training-plans.php"
                                             class="small-box-footer">Ver mais <i
                                                 class="fas fa-arrow-circle-right"></i></a>
                                     </div>
