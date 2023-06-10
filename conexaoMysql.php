@@ -3,7 +3,7 @@
 
     $servername = "localhost";
     $username = "root";
-    $password = "mysql";
+    $password = "";
     $dbname = "academia";
 
     // Cria a conexão
