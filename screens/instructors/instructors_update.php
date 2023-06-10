@@ -12,10 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $genero = $_POST["genero"];
     $telefone = $_POST["telefone"];
     $endereco = $_POST["endereco"];
-    $especialização = $_POST["especialização"];
+    $especializacao = $_POST["especializacao"];
 
     // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especialização)) {
+    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especializacao)) {
         $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
         exit();
     }
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
-    $sql = "UPDATE instrutores SET nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especialização='$especialização' WHERE id='$id'";
+    $sql = "UPDATE instrutores SET nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especializacao='$especializacao' WHERE id='$id'";
     if ($conn->query($sql) === TRUE) {
         $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
         header('Location: instructors.php');
@@ -194,7 +194,7 @@ if ($result->num_rows > 0) {
                         Gênero: <input type="text" name="genero" value="<?php echo $instrutores['genero']; ?>">
                         Telefone: <input type="text" name="telefone" value="<?php echo $instrutores['telefone']; ?>">
                         Endereço: <input type="text" name="endereco" value="<?php echo $instrutores['endereco']; ?>">
-                        Especialização: <input type="text" name="especialização" value="<?php echo $instrutores['especialização']; ?>">
+                        Especialização: <input type="text" name="especializacao" value="<?php echo $instrutores['especializacao']; ?>">
                         <input type="submit" value="Atualizar">
                     </form>
                 </div><!-- /.container-fluid -->

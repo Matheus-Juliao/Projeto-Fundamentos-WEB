@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
         echo "<td>" . $row['genero'] . "</td>";
         echo "<td>" . $row['telefone'] . "</td>";
         echo "<td>" . $row['endereco'] . "</td>";
-        echo "<td>" . $row['especialização'] . "</td>";
+        echo "<td>" . $row['especializacao'] . "</td>";
         echo "</tr>";
     }
 } else {

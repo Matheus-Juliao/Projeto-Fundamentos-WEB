@@ -20,7 +20,9 @@ CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nome_instrutor VARCHAR(20) UNIQUE,
   usuario_id INT NOT NULL,
-  especializacao VARCHAR(10) NOT NULL,
+  idade INT NOT NULL,
+  genero VARCHAR(10) NOT NULL,
+  especializacao VARCHAR(300) NOT NULL,
   telefone VARCHAR(20) NOT NULL,
   endereco VARCHAR(50) NOT NULL,
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
