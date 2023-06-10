@@ -212,17 +212,27 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 <form method="POST" action="instructors_inserts.php" class="formulario">
                                     <!-- Novo campo para o nome do instrutor -->
                                     <input type="text" name="nome_instrutor" placeholder="*Nome do instrutor">
+
                                     <input type="text" name="idade" placeholder="*Idade">
 
                                     <select name="genero" class="genero-select">
                                         <option value="">*Gênero</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="feminino">Feminino</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
                                     </select>
                                     
                                     <input type="text" name="telefone" placeholder="*Telefone">
                                     <input type="text" name="endereco" placeholder="*Endereço">
                                     <input type="text" name="especializacao" placeholder="*Especialização">
+
+                                    <select name="usuario_id" id="usuario">
+                                        <option value="">*Usuario</option>
+                                        <?php 
+                                            while ($usuario = $result1->fetch_assoc()) { 
+                                        ?>
+                                        <option value="<?php echo $usuario['id']; ?>">
+                                            <?php echo $usuario['nome']; ?></option><?php } ?>
+                                    </select>
                                     
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
@@ -232,14 +242,13 @@ if (isset($_SESSION['mensagem-erro'])) {
                                             <tr>
                                                 <th>Editar</th>
                                                 <th>Deletar</th>
-                                                <th>ID</th>
                                                 <th>Nome</th>
                                                 <th>Idade</th>
                                                 <th>Genero</th>
                                                 <th>Telefone</th>
                                                 <th>Endereço</th>
                                                 <th>Especialização</th>
-
+                                                <th>Usuário</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -249,13 +258,13 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                     echo "<tr>";
                                                     echo "<td><a class='btn btn-primary' href='instructors_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
                                                     echo "<td><a class='btn btn-danger' href='instructors_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-                                                    echo "<td>" . $row['id'] . "</td>";
                                                     echo "<td>" . $row['nome_instrutor'] . "</td>";
                                                     echo "<td>" . $row['idade'] . "</td>";
                                                     echo "<td>" . $row['genero'] . "</td>";
                                                     echo "<td>" . $row['telefone'] . "</td>";
                                                     echo "<td>" . $row['endereco'] . "</td>";
                                                     echo "<td>" . $row['especializacao'] . "</td>";
+                                                    echo "<td>" . $row['nome'] . "</td>";
                                                     echo "</tr>";
                                                 }
                                             } else {
