@@ -11,10 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $genero = $_POST["genero"];
     $telefone = $_POST["telefone"];
     $endereco = $_POST["endereco"];
-    $especialização = $_POST["especialização"];
+    $especializacao = $_POST["especializacao"];
 
     // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especialização)) {
+    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especializacao)) {
         $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios!';
         header('Location: instructors.php');
         exit();
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Prepara e executa a consulta SQL para inserir os dados na tabela de instrutores
-        $sql = "INSERT INTO instrutores (nome_instrutor, idade, genero, telefone, endereco, especialização) VALUES ('$nome', '$idade', '$genero', '$telefone', '$endereco', '$especialização')";
+        $sql = "INSERT INTO instrutores (nome_instrutor, idade, genero, telefone, endereco, especializacao) VALUES ('$nome', '$idade', '$genero', '$telefone', '$endereco', '$especializacao')";
         if ($conn->query($sql) === TRUE) {
             $_SESSION['mensagem-sucesso'] = 'Instrutor cadastrado com sucesso!';
             header('Location: instructors.php');
