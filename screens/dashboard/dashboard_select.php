@@ -23,24 +23,24 @@ if ($result->num_rows > 0) {
 
 
 // Consulta SQL para obter os dados da tabela t_inscrições
-$sqlinsc = "SELECT COUNT(*) as total, status FROM t_inscrições GROUP BY status";
+// $sqlinsc = "SELECT COUNT(*) as total, status FROM t_inscrições GROUP BY status";
 
 // Executar a consulta
-$resultinsc = $conn->query($sqlinsc);
+// $resultinsc = $conn->query($sqlinsc);
 
 // Array para armazenar os rótulos
-$labels = array();
+// $labels = array();
 // Array para armazenar os dados
-$data = array();
+// $data = array();
 
 // Verificar se a consulta retornou resultados
-if ($resultinsc->num_rows > 0) {
+// if ($resultinsc->num_rows > 0) {
     // Percorrer os resultados e armazenar os valores nas arrays
-    while ($rowinsc = $resultinsc->fetch_assoc()) {
-        $labels[] = $rowinsc["status"];
-        $data[] = $rowinsc["total"];
-    }
-}
+//     while ($rowinsc = $resultinsc->fetch_assoc()) {
+//         $labels[] = $rowinsc["status"];
+//         $data[] = $rowinsc["total"];
+//     }
+// }
 
 
 // Executa a consulta SQL para selecionar os registros da tabela de alunos

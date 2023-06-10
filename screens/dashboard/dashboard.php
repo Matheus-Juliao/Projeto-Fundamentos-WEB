@@ -66,8 +66,8 @@ if (isset($_SESSION['mensagem-erro'])) {
     <link rel="stylesheet" href="../../../../plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
-    <!-- Students CSS -->
-    <link rel="stylesheet" href="../../css/students.css">
+    <!-- dashboard CSS -->
+    <link rel="stylesheet" href="../../css/dashboard.css">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
@@ -76,7 +76,6 @@ if (isset($_SESSION['mensagem-erro'])) {
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <style>
         .ver-mais-link {
             color: black;
@@ -86,7 +85,6 @@ if (isset($_SESSION['mensagem-erro'])) {
             width: 75%;
         }
     </style>
-
 </head>
 
 <body class="hold-transition sidebar-mini">
