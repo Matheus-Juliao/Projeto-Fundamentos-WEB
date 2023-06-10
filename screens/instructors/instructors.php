@@ -1,6 +1,6 @@
 
-<?php include 'students_inserts.php';
-
+<?php include 'instructors_inserts.php';
+      
 if (isset($_GET["success"]) && $_GET["success"] == 0) {
     if (isset($_GET["message"])) {
         $message = $_GET["message"];
@@ -58,7 +58,7 @@ if (isset($_SESSION['mensagem-erro'])) {
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Alunos</title>
+        <title>AdminLTE 3 | Simple Tables</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -66,8 +66,8 @@ if (isset($_SESSION['mensagem-erro'])) {
         <link rel="stylesheet" href="../../../../plugins/fontawesome-free/css/all.min.css">
         <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
-        <!-- Students CSS -->
-        <link rel="stylesheet" href="../../css/students.css">
+        <!-- Instructors CSS -->
+        <link rel="stylesheet" href="../../css/instructors.css">
 
         <!-- Theme style -->
         <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
@@ -124,33 +124,27 @@ if (isset($_SESSION['mensagem-erro'])) {
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="students.php" class="nav-link">
+                                    <a href="../../screens/students/students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../classes/classes.php" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../instructors/instructors.php" class="nav-link">
+                                    <a href="../../screens/instructors/instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../training-plans/training-plans.php" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="screens/dashboard/dashboard.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboards</p>
                                     </a>
                                 </li>
                                 <hr>
@@ -175,7 +169,7 @@ if (isset($_SESSION['mensagem-erro'])) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Alunos</h1>
+                        <h1>Instrutores</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -190,9 +184,9 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 <!-- /.card-header -->
                                 <div class="card-body table-responsive p-0">
 
-                                <form method="POST" action="students_inserts.php" class="formulario">
-                                    <!-- Novo campo para o nome do aluno -->
-                                    <input type="text" name="nome_aluno" placeholder="*Nome do aluno">
+                                <form method="POST" action="instructors_inserts.php" class="formulario">
+                                    <!-- Novo campo para o nome do instrutor -->
+                                    <input type="text" name="nome_instrutor" placeholder="*Nome do instrutor">
                                     <input type="text" name="idade" placeholder="*Idade">
 
                                     <select name="genero" class="genero-select">
@@ -200,15 +194,14 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <option value="masculino">Masculino</option>
                                         <option value="feminino">Feminino</option>
                                     </select>
-
+                                    
                                     <input type="text" name="telefone" placeholder="*Telefone">
                                     <input type="text" name="endereco" placeholder="*Endereço">
-
+                                    <input type="text" name="especialização" placeholder="*Especialização">
+                                    
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
                                 </form>
-
-
                                     <table class="table table-hover text-nowrap">
                                         <thead>
                                             <tr>
@@ -220,6 +213,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                 <th>Genero</th>
                                                 <th>Telefone</th>
                                                 <th>Endereço</th>
+                                                <th>Especialização</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -227,18 +222,19 @@ if (isset($_SESSION['mensagem-erro'])) {
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
                                                     echo "<tr>";
-                                                    echo "<td><a class='btn btn-primary' href='students_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
-                                                    echo "<td><a class='btn btn-danger' href='students_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
+                                                    echo "<td><a class='btn btn-primary' href='instructors_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
+                                                    echo "<td><a class='btn btn-danger' href='instructors_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
                                                     echo "<td>" . $row['id'] . "</td>";
-                                                    echo "<td>" . $row['nome_aluno'] . "</td>";
+                                                    echo "<td>" . $row['nome_instrutor'] . "</td>";
                                                     echo "<td>" . $row['idade'] . "</td>";
                                                     echo "<td>" . $row['genero'] . "</td>";
                                                     echo "<td>" . $row['telefone'] . "</td>";
                                                     echo "<td>" . $row['endereco'] . "</td>";
+                                                    echo "<td>" . $row['especialização'] . "</td>";
                                                     echo "</tr>";
                                                 }
                                             } else {
-                                                echo "<tr><td colspan='8'>Nenhum aluno encontrado na tabela.</td></tr>";
+                                                echo "<tr><td colspan='8'>Nenhum instrutor encontrado na tabela.</td></tr>";
                                             }
                                             ?>
                                         </tbody>

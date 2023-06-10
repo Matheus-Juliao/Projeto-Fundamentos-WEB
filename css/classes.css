@@ -29,7 +29,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  font-size: 120%;
+  font-size: 130%;
 }
 
 .formulario button:hover {
@@ -37,7 +37,7 @@
 }
 
 
-/*FORMULÁRIO DO UPDATE_STUDENTS*/
+/*FORMULÁRIO DO UPDATE_CLASSES*/
 
 body {
   font-family: Arial, sans-serif;
@@ -66,6 +66,15 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 input[type="submit"] {
   background-color: #4caf50;
   color: #fff;
@@ -79,3 +88,6 @@ input[type="submit"]:hover {
   background-color: #45a049;
 }
 
+.instrutor {
+  margin-bottom: 10px;
+}
