@@ -59,7 +59,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="home.php" class="brand-link">
                 <img src="images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
@@ -92,7 +92,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="classes.php" class="nav-link">
+                                    <a href="screens/classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
@@ -107,6 +107,12 @@
                                     <a href="screens/plans/plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="screens/dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
                                     </a>
                                 </li>
                                 <hr>
@@ -138,7 +144,6 @@
                             <div class="small-box bg-warning">
                                 <div class="inner">
                                     <h3>Alunos</h3>
-
                                     <p>Gerenciar Alunos</p>
                                 </div>
                                 <a href="screens/students/students.php" class="small-box-footer">Clique aqui<i
@@ -151,10 +156,9 @@
                             <div class="small-box bg-warning">
                                 <div class="inner">
                                     <h3>Aulas</h3>
-
                                     <p>Gerenciar Aulas</p>
                                 </div>
-                                <a href="classes.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                                <a href="screens/classes/classes.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
 
@@ -163,7 +167,6 @@
                             <div class="small-box bg-warning">
                                 <div class="inner">
                                     <h3>Instrutores</h3>
-
                                     <p>Gerenciar Instrutores</p>
                                 </div>
                                 <a href="screens/instructors/instructors.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
@@ -175,10 +178,20 @@
                             <div class="small-box bg-warning">
                                 <div class="inner">
                                     <h3>Planos</h3>
-
                                     <p>Gerenciar Planos de Treinamento</p>
                                 </div>
                                 <a href="screens/plans/plans.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>Dashboards</h3>
+                                    <p>Visualizar Dashboards</p>
+                                </div>
+                                <a href="screens/dashboard/dashboard.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
                     </div>
