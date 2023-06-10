@@ -8,12 +8,15 @@
         $id = $_GET['id'];
 
         // Query SQL para excluir o registro
-        $sql = "DELETE FROM instrutores WHERE id=$id";
+        $sql = "DELETE FROM aulas WHERE instrutor_id=$id";
 
         if (mysqli_query($conn, $sql)) {
-            $_SESSION['mensagem-sucesso'] = 'Registro excluído com sucesso!';
-            header('Location: instructors.php');
-            exit();
+            $sql = "DELETE FROM instrutores WHERE id=$id";
+            if(mysqli_query($conn, $sql)) {
+                $_SESSION['mensagem-sucesso'] = 'Registro excluído com sucesso!';
+                header('Location: instructors.php');
+                exit();
+            }
         } else {
             $_SESSION['mensagem-erro'] = 'Erro ao excluir registro: ' . $conn->error;
         }

@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 }
 
 // Executa a consulta SQL para selecionar os registros da tabela de instrutores
-$sql = "SELECT * FROM instrutores";
+$sql = "SELECT i.id, i.nome_instrutor, i.idade, i.genero, i.especializacao, i.telefone, i.endereco, u.nome FROM usuarios u INNER JOIN instrutores i ON u.id = i.usuario_id";
 $result = $conn->query($sql);
 
 // Verifica se a consulta retornou algum resultado
@@ -23,7 +23,8 @@ if ($result->num_rows > 0) {
         echo "<td>" . $row['genero'] . "</td>";
         echo "<td>" . $row['telefone'] . "</td>";
         echo "<td>" . $row['endereco'] . "</td>";
-        echo "<td>" . $row['especialização'] . "</td>";
+        echo "<td>" . $row['especializacao'] . "</td>";
+        echo "<td>" . $row['nome'] . "</td>";
         echo "</tr>";
     }
 } else {

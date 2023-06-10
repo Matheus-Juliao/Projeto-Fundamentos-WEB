@@ -94,8 +94,7 @@ if (isset($_SESSION['mensagem-erro'])) {
         <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
         
         <!-- Classes CSS -->
-        <link rel="stylesheet" href="../../css/classes.css">
-        
+        <link rel="stylesheet" href="../../css/classes.css"> 
     </head>
 
 <body class="hold-transition sidebar-mini">

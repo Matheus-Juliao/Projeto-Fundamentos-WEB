@@ -53,28 +53,47 @@ if (isset($_SESSION['mensagem-erro'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>AdminLTE 3 | Simple Tables</title>
+        <title>Instrutores</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Tempusdominus Bootstrap 4 -->
+        <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+        <!-- JQVMap -->
+        <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <!-- Daterange picker -->
+        <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+        <!-- summernote -->
+        <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="../../../../plugins/fontawesome-free/css/all.min.css">
-        <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
-
+        <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+        
         <!-- Instructors CSS -->
         <link rel="stylesheet" href="../../css/instructors.css">
-
-        <!-- Theme style -->
-        <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-        
     </head>
 
 <body class="hold-transition sidebar-mini">
@@ -124,32 +143,38 @@ if (isset($_SESSION['mensagem-erro'])) {
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../../screens/students/students.php" class="nav-link">
+                                    <a href="../students/students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../../screens/instructors/instructors.php" class="nav-link">
+                                    <a href="../instructors/instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../plans/plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../../logout.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sair</p>
                                     </a>
@@ -187,17 +212,27 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 <form method="POST" action="instructors_inserts.php" class="formulario">
                                     <!-- Novo campo para o nome do instrutor -->
                                     <input type="text" name="nome_instrutor" placeholder="*Nome do instrutor">
+
                                     <input type="text" name="idade" placeholder="*Idade">
 
                                     <select name="genero" class="genero-select">
                                         <option value="">*Gênero</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="feminino">Feminino</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
                                     </select>
                                     
                                     <input type="text" name="telefone" placeholder="*Telefone">
                                     <input type="text" name="endereco" placeholder="*Endereço">
-                                    <input type="text" name="especialização" placeholder="*Especialização">
+                                    <input type="text" name="especializacao" placeholder="*Especialização">
+
+                                    <select name="usuario_id" id="usuario">
+                                        <option value="">*Usuario</option>
+                                        <?php 
+                                            while ($usuario = $result1->fetch_assoc()) { 
+                                        ?>
+                                        <option value="<?php echo $usuario['id']; ?>">
+                                            <?php echo $usuario['nome']; ?></option><?php } ?>
+                                    </select>
                                     
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
@@ -207,14 +242,13 @@ if (isset($_SESSION['mensagem-erro'])) {
                                             <tr>
                                                 <th>Editar</th>
                                                 <th>Deletar</th>
-                                                <th>ID</th>
                                                 <th>Nome</th>
                                                 <th>Idade</th>
                                                 <th>Genero</th>
                                                 <th>Telefone</th>
                                                 <th>Endereço</th>
                                                 <th>Especialização</th>
-
+                                                <th>Usuário</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -224,13 +258,13 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                     echo "<tr>";
                                                     echo "<td><a class='btn btn-primary' href='instructors_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
                                                     echo "<td><a class='btn btn-danger' href='instructors_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-                                                    echo "<td>" . $row['id'] . "</td>";
                                                     echo "<td>" . $row['nome_instrutor'] . "</td>";
                                                     echo "<td>" . $row['idade'] . "</td>";
                                                     echo "<td>" . $row['genero'] . "</td>";
                                                     echo "<td>" . $row['telefone'] . "</td>";
                                                     echo "<td>" . $row['endereco'] . "</td>";
-                                                    echo "<td>" . $row['especialização'] . "</td>";
+                                                    echo "<td>" . $row['especializacao'] . "</td>";
+                                                    echo "<td>" . $row['nome'] . "</td>";
                                                     echo "</tr>";
                                                 }
                                             } else {
