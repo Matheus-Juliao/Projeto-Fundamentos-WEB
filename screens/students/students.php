@@ -216,8 +216,8 @@ if (isset($_SESSION['mensagem-erro'])) {
 
                                     <select name="genero" class="genero-select">
                                         <option value="">*Gênero</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="feminino">Feminino</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
                                     </select>
 
                                     <input type="text" name="telefone" placeholder="*Telefone">

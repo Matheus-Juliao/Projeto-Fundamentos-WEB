@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Recupera os alunos da tabela para exibir na tabela HTML
-$sql = "SELECT a.id, a.nome as aula, i.nome_instrutor, i.especializacao FROM aulas a INNER JOIN instrutores i on a.instrutor_id = i.id";
+$sql = "SELECT a.id, a.nome as aula, i.nome_instrutor, i.especializacao FROM aulas a INNER JOIN instrutores i ON a.instrutor_id = i.id";
 $result = $conn->query($sql);
 
 // Consultar os instrutores no banco de dados

@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Atualizar Aulas</title>
+    <title>Atualizar Aula</title>
     <link rel="stylesheet" href="../../css/classes.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -142,7 +142,7 @@ if ($result->num_rows > 0) {
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="students.php" class="nav-link">
+                                    <a href="../students/students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
@@ -154,20 +154,26 @@ if ($result->num_rows > 0) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../instructors/instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../plans/plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../../logout.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sair</p>
                                     </a>
@@ -187,7 +193,7 @@ if ($result->num_rows > 0) {
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                <h2>Atualizar Aulas</h2>
+                <h2>Atualizar Aula</h2>
                     <form method="POST" action="">
                         <input type="hidden" name="id" value="<?php echo $aula['id']; ?>">
                         Nome da Aula:   <select name="aula">
