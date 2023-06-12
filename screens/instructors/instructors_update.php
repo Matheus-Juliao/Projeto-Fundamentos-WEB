@@ -1,11 +1,10 @@
-
-
 <?php
 include '../../conexaoMysql.php';
 
 // Verifica se os dados foram enviados através do método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recupera os dados do formulário
+    $usuario_id = $_POST["usuario_id"];
     $id = $_POST["id"];
     $nome = $_POST["nome_instrutor"];
     $idade = $_POST["idade"];
@@ -15,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $especializacao = $_POST["especializacao"];
 
     // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especializacao)) {
+    if (empty($usuario_id) || empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especializacao)) {
         $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
         exit();
     }
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
-    $sql = "UPDATE instrutores SET nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especializacao='$especializacao' WHERE id='$id'";
+    $sql = "UPDATE instrutores SET  usuario_id='$usuario_id', nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especializacao='$especializacao' WHERE id='$id'";
     if ($conn->query($sql) === TRUE) {
         $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
         header('Location: instructors.php');
@@ -43,9 +42,16 @@ $id = $_GET["id"];
 $sql = "SELECT * FROM instrutores WHERE id='$id'";
 $result = $conn->query($sql);
 
+// Consultar os usuarios no banco de dados
+$sql1 = "SELECT id, nome FROM usuarios";
+$result1 = $conn->query($sql1);
+
 // Verifica se o aluno existe
 if ($result->num_rows > 0) {
     $instrutores = $result->fetch_assoc();
+    $usuario_id = $instrutores['usuario_id'];
+    $generoSelecionado = $instrutores['genero'];
+    $usuario = $result1;
 } else {
     echo "Instrutor não encontrado.";
     exit();
@@ -58,7 +64,7 @@ if ($result->num_rows > 0) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Atualizar Instrutor</title>
     <link rel="stylesheet" href="../../css/instructors.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -141,13 +147,13 @@ if ($result->num_rows > 0) {
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="students.php" class="nav-link">
+                                    <a href="../students/students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="classes.php" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
@@ -159,14 +165,20 @@ if ($result->num_rows > 0) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../plans/plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../../logout.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sair</p>
                                     </a>
@@ -191,10 +203,25 @@ if ($result->num_rows > 0) {
                         <input type="hidden" name="id" value="<?php echo $instrutores['id']; ?>">
                         Nome: <input type="text" name="nome_instrutor" value="<?php echo $instrutores['nome_instrutor']; ?>">
                         Idade: <input type="text" name="idade" value="<?php echo $instrutores['idade']; ?>">
-                        Gênero: <input type="text" name="genero" value="<?php echo $instrutores['genero']; ?>">
+                        Gênero:   <select class="instrutor" name="genero">
+                                        <option value="Masculino"<?php if ($generoSelecionado == 'Masculino') echo ' selected'; ?>>Masculino</option>
+                                        <option value="Feminino"<?php if ($generoSelecionado == 'Feminino') echo ' selected'; ?>>Feminino</option>
+                                    </select>
                         Telefone: <input type="text" name="telefone" value="<?php echo $instrutores['telefone']; ?>">
                         Endereço: <input type="text" name="endereco" value="<?php echo $instrutores['endereco']; ?>">
                         Especialização: <input type="text" name="especializacao" value="<?php echo $instrutores['especializacao']; ?>">
+                        
+                        Usuário: <select class="instrutor" name="usuario_id" id="usuario">
+                            <?php
+                            while ($usuario = $result1->fetch_assoc()) {
+                                $selected = ($usuario['id'] == $usuario_id) ? 'selected' : '';
+                                ?>
+                                <option value="<?php echo $usuario['id']; ?>" <?php echo $selected; ?>>
+                                    <?php echo $usuario['nome']; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+
                         <input type="submit" value="Atualizar">
                     </form>
                 </div><!-- /.container-fluid -->

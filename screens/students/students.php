@@ -118,7 +118,7 @@ if (isset($_SESSION['mensagem-erro'])) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="../../home.php" class="brand-link">
                 <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
@@ -216,12 +216,21 @@ if (isset($_SESSION['mensagem-erro'])) {
 
                                     <select name="genero" class="genero-select">
                                         <option value="">*Gênero</option>
-                                        <option value="masculino">Masculino</option>
-                                        <option value="feminino">Feminino</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
                                     </select>
 
                                     <input type="text" name="telefone" placeholder="*Telefone">
                                     <input type="text" name="endereco" placeholder="*Endereço">
+
+                                    <select name="id_plans" id="plans">
+                                        <option value="">*Planos</option>
+                                        <?php 
+                                            while ($plans = $result1->fetch_assoc()) { 
+                                        ?>
+                                        <option value="<?php echo $plans['id']; ?>">
+                                            <?php echo $plans['nome']; ?></option><?php } ?>
+                                    </select>
 
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
@@ -238,6 +247,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                 <th>Genero</th>
                                                 <th>Telefone</th>
                                                 <th>Endereço</th>
+                                                <th>Planos</th>
+                                                <th>Valor</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -252,6 +263,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                     echo "<td>" . $row['genero'] . "</td>";
                                                     echo "<td>" . $row['telefone'] . "</td>";
                                                     echo "<td>" . $row['endereco'] . "</td>";
+                                                    echo "<td>" . $row['nome'] . "</td>";
+                                                    echo "<td>" . $row['valor'] . "</td>";
                                                     echo "</tr>";
                                                 }
                                             } else {

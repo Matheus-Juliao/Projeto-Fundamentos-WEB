@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $genero = $_POST["genero"];
     $telefone = $_POST["telefone"];
     $endereco = $_POST["endereco"];
+    $id_plans = $_POST["id_plans"];
 
     // Verifica se algum dos campos obrigatórios está vazio
     if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco)) {
@@ -27,12 +28,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
     $sql = "UPDATE alunos SET nome_aluno='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco' WHERE id='$id'";
     if ($conn->query($sql) === TRUE) {
-        $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
-        header('Location: students.php');
-        exit();
+        // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
+        $sql1 = "UPDATE alunos_planos_de_treinamento SET planos_de_treinamento_id=$id_plans' WHERE aluno_id='$id'";
+        if ($conn->query($sql) === TRUE) {
+            $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
+            header('Location: students.php');
+            exit();
+        } else {
+            $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+        }
     } else {
         $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
     }
+
+
 }
 
 // Recupera o ID do aluno a ser atualizado da URL
@@ -42,9 +51,25 @@ $id = $_GET["id"];
 $sql = "SELECT * FROM alunos WHERE id='$id'";
 $result = $conn->query($sql);
 
+// Recupera os dados do aluno a partir do ID
+$sql = "SELECT a.id, a.nome_aluno, a.idade, a.genero, a.telefone, a.endereco, p.id as id_plans, p.nome, p.valor
+FROM alunos a
+INNER JOIN alunos_planos_de_treinamento ap ON a.id = ap.aluno_id
+INNER JOIN planos_de_treinamento p ON ap.planos_de_treinamento_id = p.id
+WHERE a.id='$id'";
+$result = $conn->query($sql);
+
+// Consultar os planos no banco de dados
+$sql1 = "SELECT * FROM planos_de_treinamento";
+$result1 = $conn->query($sql1);
+
 // Verifica se o aluno existe
 if ($result->num_rows > 0) {
     $aluno = $result->fetch_assoc();
+    $id_plans = $aluno['id_plans'];
+    $generoSelecionado = $aluno['genero'];
+    $plans = $result1;
+;
 } else {
     echo "Aluno não encontrado.";
     exit();
@@ -57,7 +82,7 @@ if ($result->num_rows > 0) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Atualizar Aluno</title>
     <link rel="stylesheet" href="../../css/students.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -146,26 +171,32 @@ if ($result->num_rows > 0) {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="classes.php" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../instructors/instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../plans/plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../../logout.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sair</p>
                                     </a>
@@ -190,9 +221,22 @@ if ($result->num_rows > 0) {
                         <input type="hidden" name="id" value="<?php echo $aluno['id']; ?>">
                         Nome: <input type="text" name="nome_aluno" value="<?php echo $aluno['nome_aluno']; ?>">
                         Idade: <input type="text" name="idade" value="<?php echo $aluno['idade']; ?>">
-                        Gênero: <input type="text" name="genero" value="<?php echo $aluno['genero']; ?>">
+                        Gênero:   <select class="select" name="genero">
+                                        <option value="Masculino"<?php if ($generoSelecionado == 'Masculino') echo ' selected'; ?>>Masculino</option>
+                                        <option value="Feminino"<?php if ($generoSelecionado == 'Feminino') echo ' selected'; ?>>Feminino</option>
+                                    </select>
                         Telefone: <input type="text" name="telefone" value="<?php echo $aluno['telefone']; ?>">
                         Endereço: <input type="text" name="endereco" value="<?php echo $aluno['endereco']; ?>">
+                        Planos: <select class="select" name="id_plans" id="plans">
+                                <?php
+                                    while ($plans = $result1->fetch_assoc()) {
+                                        $selected = ($plans['id'] == $id_plans) ? 'selected' : '';
+                                        ?>
+                                        <option value="<?php echo $plans['id']; ?>" <?php echo $selected; ?>>
+                                            <?php echo $plans['nome']; ?>
+                                        </option>
+                                    <?php } ?>
+                                 </select>
                         <input type="submit" value="Atualizar">
                     </form>
                 </div><!-- /.container-fluid -->

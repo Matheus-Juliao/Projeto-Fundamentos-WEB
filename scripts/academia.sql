@@ -18,7 +18,7 @@ CREATE TABLE alunos (
 
 CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_instrutor VARCHAR(20) UNIQUE,
+  nome_instrutor VARCHAR(50) UNIQUE,
   usuario_id INT NOT NULL,
   idade INT NOT NULL,
   genero VARCHAR(10) NOT NULL,
@@ -60,6 +60,8 @@ insert into instrutores (nome_instrutor, usuario_id, especializacao, telefone, e
 	values ("Adriano Pinheiro", 2, "Musculação, Zumba, Natação", "19970707070", "Rua Joaquim Marcelino Leite, 265");
 insert into aulas (nome, instrutor_id) values ("Zumba", 1);
 insert into aulas (nome, instrutor_id) values ("Natação", 1);
+insert into instrutores (nome_instrutor, usuario_id, idade, genero, especializacao, telefone, endereco) values ("Matheus", 1, 34, "Masculino", "", "", "");
+INSERT INTO instrutores (nome_instrutor, usuario_id, idade, genero, telefone, endereco, especializacao) VALUES ($nome', '$usuario_id', '$idade', '$genero', '$telefone', '$endereco', '$especializacao')"
 
 -- SELECT
 select * from usuarios;
@@ -68,6 +70,10 @@ select * from instrutores;
 select * from planos_de_treinamento;
 select * from instrutores;
 select * from aulas;
+
+-- DELETE
+DELETE FROM aulas WHERE instrutor_id=4;
+DELETE FROM instrutores WHERE id=4;
 
 -- DROPAR TODAS AS TABELAS CASO EXISTAM:
 DROP TABLE IF EXISTS alunos_planos_de_treinamento;
@@ -82,10 +88,9 @@ SELECT a.id AS aluno_id, a.nome_aluno, u.id AS usuario_id, u.nome AS usuario_nom
 FROM alunos AS a
 JOIN usuarios AS u ON a.usuário_id = u.id;
 
--- INSTUTORES JOIN USUÁRIOS
-SELECT i.id AS instrutor_id, i.nome_instrutor, u.id AS usuario_id, u.nome AS usuario_nome, u.email
-FROM instrutores AS i
-JOIN usuarios AS u ON i.usuário_id = u.id;
+-- USUÁRIOS JOIN INSTRUTORES
+SELECT i.id, i.nome_instrutor, i.idade, i.genero, i.especializacao, i.telefone, i.endereco, u.nome 
+FROM usuarios u INNER JOIN instrutores i ON u.id = i.usuario_id;
 
 -- PLANOS_DE_TREINAMENTO JOIN INSTRUTORES
 SELECT p.id AS plano_id, p.nome AS plano_nome, p.descrição AS plano_descrição, i.id AS instrutor_id, i.nome_instrutor

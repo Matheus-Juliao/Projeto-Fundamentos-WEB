@@ -8,11 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recupera os dados do formulário
     $id = $_POST["id"];
     $nome = $_POST["nome"];
-    $descrição = $_POST["descrição"];
+    $descricao = $_POST["descricao"];
     $valor = $_POST["valor"];
 
     // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($nome) || empty($descrição)) {
+    if (empty($id) || empty($nome) || empty($descricao) || empty($valor)) {
         $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
         exit();
     }
@@ -23,13 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepara e executa a consulta SQL para atualizar os dados na tabela de planos
-    $sql = "UPDATE planos_de_treinamento SET nome='$nome', descrição='$descrição,' ,valor='$valor,' WHERE id='$id'";
+    $sql = "UPDATE planos_de_treinamento SET nome='$nome', descricao='$descricao', valor='$valor' WHERE id='$id'";
     if ($conn->query($sql) === TRUE) {
         $_SESSION['mensagem-sucesso'] = 'Plano editado com sucesso!';
         header('Location: plans.php');
         exit();
     } else {
         $_SESSION['mensagem-erro'] = 'Erro ao atualizar o plano: ' . $conn->error;
+        header('Location: plans.php');
+        exit();
     }
 }
 
@@ -55,7 +57,7 @@ if ($result->num_rows > 0) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Atualizar Planos</title>
     <link rel="stylesheet" href="../../css/plans.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -111,7 +113,7 @@ if ($result->num_rows > 0) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="../../home.php" class="brand-link">
                 <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
@@ -138,19 +140,19 @@ if ($result->num_rows > 0) {
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="students.php" class="nav-link">
+                                    <a href="../students/students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="classes.php" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="instructors.php" class="nav-link">
+                                    <a href="../instructors/instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
@@ -163,7 +165,7 @@ if ($result->num_rows > 0) {
                                 </li>
                                 <hr>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../../logout.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sair</p>
                                     </a>
@@ -187,8 +189,8 @@ if ($result->num_rows > 0) {
                     <form method="POST" action="">
                         <input type="hidden" name="id" value="<?php echo $planos_de_treinamento['id']; ?>">
                         Nome: <input type="text" name="nome" value="<?php echo isset($planos_de_treinamento['nome']) ? $planos_de_treinamento['nome'] : ''; ?>">
-                        Descrição: <input type="text" name="descrição" value="<?php echo isset($planos_de_treinamento['descrição']) ? $planos_de_treinamento['descrição'] : ''; ?>">
-                        Valor/Mês: <input type="text" name="valor" value="<?php echo isset($planos_de_treinamento['valor']) ? $planos_de_treinamento['valor'] : ''; ?>">
+                        Descrição: <input type="text" name="descricao" value="<?php echo isset($planos_de_treinamento['descricao']) ? $planos_de_treinamento['descricao'] : ''; ?>">
+                        Valor em R$: <input type="text" name="valor" value="<?php echo isset($planos_de_treinamento['valor']) ? $planos_de_treinamento['valor'] : ''; ?>">
                         
                         <input type="submit" value="Atualizar">
                     </form>
