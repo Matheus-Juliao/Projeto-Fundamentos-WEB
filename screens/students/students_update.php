@@ -1,79 +1,85 @@
 
 
 <?php
-include '../../conexaoMysql.php';
+    include '../../checkLoginScreens.php';
 
-// Verifica se os dados foram enviados através do método POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recupera os dados do formulário
-    $id = $_POST["id"];
-    $nome = $_POST["nome_aluno"];
-    $idade = $_POST["idade"];
-    $genero = $_POST["genero"];
-    $telefone = $_POST["telefone"];
-    $endereco = $_POST["endereco"];
-    $id_plans = $_POST["id_plans"];
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+    
+    include '../../conexaoMysql.php';
 
-    // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco)) {
-        $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
-        exit();
-    }
+    // Verifica se os dados foram enviados através do método POST
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recupera os dados do formulário
+        $id = $_POST["id"];
+        $nome = $_POST["nome_aluno"];
+        $idade = $_POST["idade"];
+        $genero = $_POST["genero"];
+        $telefone = $_POST["telefone"];
+        $endereco = $_POST["endereco"];
+        $id_plans = $_POST["id_plans"];
 
-    // Verifica se a conexão foi estabelecida com sucesso
-    if ($conn->connect_error) {
-        die("Falha na conexão com o banco de dados: " . $conn->connect_error);
-    }
-
-    // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
-    $sql = "UPDATE alunos SET nome_aluno='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco' WHERE id='$id'";
-    if ($conn->query($sql) === TRUE) {
-        // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
-        $sql1 = "UPDATE alunos_planos_de_treinamento SET planos_de_treinamento_id=$id_plans' WHERE aluno_id='$id'";
-        if ($conn->query($sql) === TRUE) {
-            $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
-            header('Location: students.php');
+        // Verifica se algum dos campos obrigatórios está vazio
+        if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco)) {
+            $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
             exit();
+        }
+
+        // Verifica se a conexão foi estabelecida com sucesso
+        if ($conn->connect_error) {
+            die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+        }
+
+        // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
+        $sql = "UPDATE alunos SET nome_aluno='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco' WHERE id='$id'";
+        if ($conn->query($sql) === TRUE) {
+            // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
+            $sql1 = "UPDATE alunos_planos_de_treinamento SET planos_de_treinamento_id=$id_plans' WHERE aluno_id='$id'";
+            if ($conn->query($sql) === TRUE) {
+                $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
+                header('Location: students.php');
+                exit();
+            } else {
+                $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+            }
         } else {
             $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
         }
-    } else {
-        $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+
+
     }
 
+    // Recupera o ID do aluno a ser atualizado da URL
+    $id = $_GET["id"];
 
-}
+    // Recupera os dados do aluno a partir do ID
+    $sql = "SELECT * FROM alunos WHERE id='$id'";
+    $result = $conn->query($sql);
 
-// Recupera o ID do aluno a ser atualizado da URL
-$id = $_GET["id"];
+    // Recupera os dados do aluno a partir do ID
+    $sql = "SELECT a.id, a.nome_aluno, a.idade, a.genero, a.telefone, a.endereco, p.id as id_plans, p.nome, p.valor
+    FROM alunos a
+    INNER JOIN alunos_planos_de_treinamento ap ON a.id = ap.aluno_id
+    INNER JOIN planos_de_treinamento p ON ap.planos_de_treinamento_id = p.id
+    WHERE a.id='$id'";
+    $result = $conn->query($sql);
 
-// Recupera os dados do aluno a partir do ID
-$sql = "SELECT * FROM alunos WHERE id='$id'";
-$result = $conn->query($sql);
+    // Consultar os planos no banco de dados
+    $sql1 = "SELECT * FROM planos_de_treinamento";
+    $result1 = $conn->query($sql1);
 
-// Recupera os dados do aluno a partir do ID
-$sql = "SELECT a.id, a.nome_aluno, a.idade, a.genero, a.telefone, a.endereco, p.id as id_plans, p.nome, p.valor
-FROM alunos a
-INNER JOIN alunos_planos_de_treinamento ap ON a.id = ap.aluno_id
-INNER JOIN planos_de_treinamento p ON ap.planos_de_treinamento_id = p.id
-WHERE a.id='$id'";
-$result = $conn->query($sql);
-
-// Consultar os planos no banco de dados
-$sql1 = "SELECT * FROM planos_de_treinamento";
-$result1 = $conn->query($sql1);
-
-// Verifica se o aluno existe
-if ($result->num_rows > 0) {
-    $aluno = $result->fetch_assoc();
-    $id_plans = $aluno['id_plans'];
-    $generoSelecionado = $aluno['genero'];
-    $plans = $result1;
-;
-} else {
-    echo "Aluno não encontrado.";
-    exit();
-}
+    // Verifica se o aluno existe
+    if ($result->num_rows > 0) {
+        $aluno = $result->fetch_assoc();
+        $id_plans = $aluno['id_plans'];
+        $generoSelecionado = $aluno['genero'];
+        $plans = $result1;
+    ;
+    } else {
+        echo "Aluno não encontrado.";
+        exit();
+    }
 
 ?>
 

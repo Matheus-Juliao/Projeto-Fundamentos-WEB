@@ -1,56 +1,62 @@
 <?php
-include '../../conexaoMysql.php';
+    include '../../checkLoginScreens.php';
 
-// Verifica se os dados foram enviados através do método POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recupera os dados do formulário
-    $id = $_POST["id"];
-    $aula = $_POST["aula"];
-    $id_instrutor = $_POST["id_instrutor"];
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+    
+    include '../../conexaoMysql.php';
+
+    // Verifica se os dados foram enviados através do método POST
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recupera os dados do formulário
+        $id = $_POST["id"];
+        $aula = $_POST["aula"];
+        $id_instrutor = $_POST["id_instrutor"];
 
 
-    // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($id) || empty($aula) || empty($id_instrutor)) {
-        $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
-        exit();
+        // Verifica se algum dos campos obrigatórios está vazio
+        if (empty($id) || empty($aula) || empty($id_instrutor)) {
+            $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
+            exit();
+        }
+
+        // Verifica se a conexão foi estabelecida com sucesso
+        if ($conn->connect_error) {
+            die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+        }
+
+        // Prepara e executa a consulta SQL para atualizar os dados na tabela de aulas
+        $sql = "UPDATE aulas SET nome='$aula', instrutor_id='$id_instrutor' WHERE id='$id'";
+        if ($conn->query($sql) === TRUE) {
+            $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
+            header('Location: classes.php');
+            exit();
+        } else {
+            $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+        }
     }
 
-    // Verifica se a conexão foi estabelecida com sucesso
-    if ($conn->connect_error) {
-        die("Falha na conexão com o banco de dados: " . $conn->connect_error);
-    }
+    // Recupera o ID do aluno a ser atualizado da URL
+    $id = $_GET["id"];
 
-    // Prepara e executa a consulta SQL para atualizar os dados na tabela de aulas
-    $sql = "UPDATE aulas SET nome='$aula', instrutor_id='$id_instrutor' WHERE id='$id'";
-    if ($conn->query($sql) === TRUE) {
-        $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
-        header('Location: classes.php');
-        exit();
+    // Recupera os dados da aula a partir do ID
+    $sql = "SELECT id, nome as aula, instrutor_id FROM aulas WHERE id='$id'";
+    $result = $conn->query($sql);
+
+    // Consultar os instrutores no banco de dados
+    $sql1 = "SELECT id, nome_instrutor FROM instrutores";
+    $result1 = $conn->query($sql1);
+
+    // Verifica se a aula existe
+    if ($result->num_rows > 0) {
+        $aula = $result->fetch_assoc();
+        $instrutor_id = $aula['instrutor_id'];
+        $aulaSelecionada = $aula['aula'];
     } else {
-        $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+        $_SESSION['mensagem-erro'] = 'Aula não encontrada!';
+        exit();
     }
-}
-
-// Recupera o ID do aluno a ser atualizado da URL
-$id = $_GET["id"];
-
-// Recupera os dados da aula a partir do ID
-$sql = "SELECT id, nome as aula, instrutor_id FROM aulas WHERE id='$id'";
-$result = $conn->query($sql);
-
-// Consultar os instrutores no banco de dados
-$sql1 = "SELECT id, nome_instrutor FROM instrutores";
-$result1 = $conn->query($sql1);
-
-// Verifica se a aula existe
-if ($result->num_rows > 0) {
-    $aula = $result->fetch_assoc();
-    $instrutor_id = $aula['instrutor_id'];
-    $aulaSelecionada = $aula['aula'];
-} else {
-    $_SESSION['mensagem-erro'] = 'Aula não encontrada!';
-    exit();
-}
 
 ?>
 

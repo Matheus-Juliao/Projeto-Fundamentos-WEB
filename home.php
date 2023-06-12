@@ -1,3 +1,12 @@
+<?php
+    include 'conexaoMysql.php';
+    include 'checkLogin.php';
+
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

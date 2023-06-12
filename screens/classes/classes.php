@@ -1,5 +1,11 @@
 
 <?php 
+    include '../../checkLoginScreens.php';
+
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+
     include 'classes_inserts.php';
 
     if (isset($_GET["success"]) && $_GET["success"] == 0) {

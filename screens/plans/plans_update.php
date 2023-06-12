@@ -1,54 +1,60 @@
 
 
 <?php
-include '../../conexaoMysql.php';
+    include '../../checkLoginScreens.php';
 
-// Verifica se os dados foram enviados através do método POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recupera os dados do formulário
-    $id = $_POST["id"];
-    $nome = $_POST["nome"];
-    $descricao = $_POST["descricao"];
-    $valor = $_POST["valor"];
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
 
-    // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($id) || empty($nome) || empty($descricao) || empty($valor)) {
-        $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
-        exit();
+    include '../../conexaoMysql.php';
+
+    // Verifica se os dados foram enviados através do método POST
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recupera os dados do formulário
+        $id = $_POST["id"];
+        $nome = $_POST["nome"];
+        $descricao = $_POST["descricao"];
+        $valor = $_POST["valor"];
+
+        // Verifica se algum dos campos obrigatórios está vazio
+        if (empty($id) || empty($nome) || empty($descricao) || empty($valor)) {
+            $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
+            exit();
+        }
+
+        // Verifica se a conexão foi estabelecida com sucesso
+        if ($conn->connect_error) {
+            die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+        }
+
+        // Prepara e executa a consulta SQL para atualizar os dados na tabela de planos
+        $sql = "UPDATE planos_de_treinamento SET nome='$nome', descricao='$descricao', valor='$valor' WHERE id='$id'";
+        if ($conn->query($sql) === TRUE) {
+            $_SESSION['mensagem-sucesso'] = 'Plano editado com sucesso!';
+            header('Location: plans.php');
+            exit();
+        } else {
+            $_SESSION['mensagem-erro'] = 'Erro ao atualizar o plano: ' . $conn->error;
+            header('Location: plans.php');
+            exit();
+        }
     }
 
-    // Verifica se a conexão foi estabelecida com sucesso
-    if ($conn->connect_error) {
-        die("Falha na conexão com o banco de dados: " . $conn->connect_error);
-    }
+    // Recupera o ID do plano a ser atualizado da URL
+    $id = $_GET["id"];
 
-    // Prepara e executa a consulta SQL para atualizar os dados na tabela de planos
-    $sql = "UPDATE planos_de_treinamento SET nome='$nome', descricao='$descricao', valor='$valor' WHERE id='$id'";
-    if ($conn->query($sql) === TRUE) {
-        $_SESSION['mensagem-sucesso'] = 'Plano editado com sucesso!';
-        header('Location: plans.php');
-        exit();
+    // Recupera os dados do aluno a partir do ID
+    $sql = "SELECT * FROM planos_de_treinamento WHERE id='$id'";
+    $result = $conn->query($sql);
+
+    // Verifica se o plano existe
+    if ($result->num_rows > 0) {
+        $planos_de_treinamento = $result->fetch_assoc();
     } else {
-        $_SESSION['mensagem-erro'] = 'Erro ao atualizar o plano: ' . $conn->error;
-        header('Location: plans.php');
+        echo "Plano não encontrado.";
         exit();
     }
-}
-
-// Recupera o ID do plano a ser atualizado da URL
-$id = $_GET["id"];
-
-// Recupera os dados do aluno a partir do ID
-$sql = "SELECT * FROM planos_de_treinamento WHERE id='$id'";
-$result = $conn->query($sql);
-
-// Verifica se o plano existe
-if ($result->num_rows > 0) {
-    $planos_de_treinamento = $result->fetch_assoc();
-} else {
-    echo "Plano não encontrado.";
-    exit();
-}
 
 ?>
 
