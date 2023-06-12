@@ -106,16 +106,31 @@ if (isset($_SESSION['mensagem-erro'])) {
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Language', 'Speakers (in millions)'],
-                ['Condicionamento Físico', 5.2],
-                ['Emagrecimento', 3],
-                ['Musculação', 3],
-                ['Pilates', 3],
-                ['Treinamento de Força', 3],
-                ['Treinamento Funcional', 3],
-                ['Yoga', 3],
-                ['Zumba', 3],
-                ['Natação', 3]
+                ['Condicionamento Físico', 34],
+                ['Emagrecimento', 77],
+                ['Musculação', 105],
+                ['Pilates', 56],
+                ['Treinamento de Força', 47],
+                ['Treinamento Funcional', 37],
+                ['Yoga', 60],
+                ['Zumba', 35],
+                ['Natação', 98]
             ]);
+            // data.addRows([
+            //     <?php
+            //     // Realize a consulta SQL para obter a contagem de alunos por tipo de aula
+            //     $query = "SELECT a.nome, COUNT(ap.aluno_id) as quantidade_alunos
+            //         FROM aulas a
+            //         LEFT JOIN alunos_planos_de_treinamento ap ON a.id = ap.planos_de_treinamento_id
+            //         GROUP BY a.id";
+            //     $result = mysqli_query($conexao, $query);
+
+            //     // Itere sobre os resultados da consulta e adicione as linhas de dados
+            //     while ($row = mysqli_fetch_assoc($result)) {
+            //         echo "['" . $row['nome'] . "', " . $row['quantidade_alunos'] . "],";
+            //     }
+            //     ?>
+            // ]);
 
             var options = {
                 legend: 'none',
@@ -274,7 +289,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                     <div class="small-box bg-success larger-card">
                         <div class="inner">
                             <h3>
-                                <?php echo $totalAlunos; ?>
+                                <?php echo $total_instrutores; ?>
                             </h3>
 
                             <p>Intrutores</p>
@@ -330,6 +345,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 <!-- Morris chart - Sales -->
                                 <div class="card-body">
                                     <!-- <canvas id="inscricoesChart"></canvas> -->
+                                    <div id="chart_div"></div>
                                     <div id="piechart" style="width: 600px; height: 600px;"></div>
                                 </div>
                                 <!-- <div class="chart tab-pane active" id="revenue-chart"
@@ -363,8 +379,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                             <div class="card p-3 mb-3">
                                 <div class="col-4 text-center">
                                     <div class="box-planos">
-                                        <h4>Plano 1</h4>
-                                        <p>Musculação</p>
+                                        <h4>Musculação</h4>
+                                        <p>R$ 100 Semestral</p>
                                         <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
                                             class="btn btn-custom-ver-mais btn-sm ver-mais-link">
                                             Ver mais <i class="fas fa-arrow-circle-right"></i>
@@ -375,8 +391,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                             <div class="card p-3 mb-3">
                                 <div class="col-4 text-center">
                                     <div class="box-planos">
-                                        <h4>Plano 2</h4>
-                                        <p>Natação</p>
+                                        <h4>Natação</h4>
+                                        <p>R$ 120 Semestral</p>
                                         <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
                                             class="btn btn-custom-ver-mais btn-sm ver-mais-link">
                                             Ver mais <i class="fas fa-arrow-circle-right"></i>
@@ -387,8 +403,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                             <div class="card p-3">
                                 <div class="col-4 text-center">
                                     <div class="box-planos">
-                                        <h4>Plano 3</h4>
-                                        <p>Musculação</p>
+                                        <h4>Plano Completo</h4>
+                                        <p>R$ 200 Semestral</p>
                                         <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
                                             class="btn btn-custom-ver-mais btn-sm ver-mais-link">
                                             Ver mais <i class="fas fa-arrow-circle-right"></i>

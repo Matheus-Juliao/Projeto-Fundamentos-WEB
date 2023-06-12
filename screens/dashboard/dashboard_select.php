@@ -21,20 +21,17 @@ if ($result->num_rows > 0) {
 }
 
 // Executa a consulta SQL
-$sql2 = "SELECT COUNT(*) as total_instrutores FROM instrutores";
-$result2 = $conn->query($sql2);
+$sql = "SELECT COUNT(*) as total_instrutores FROM instrutores";
+$result = $conn->query($sql);
 
 // Verifica se a consulta retornou algum resultado
-if ($result2->num_rows > 0) {
+if ($result->num_rows > 0) {
     // Obtém o número de alunos cadastrados
-    $row2 = $result2->fetch_assoc();
-    $total_instrutores = $row2["total_instrutores"];
+    $row = $result->fetch_assoc();
+    $total_instrutores = $row["total_instrutores"];
 } else {
     $total_instrutores = 0;
 }
-
-
-
 
 
 // Consulta SQL para obter os dados da tabela t_inscrições
