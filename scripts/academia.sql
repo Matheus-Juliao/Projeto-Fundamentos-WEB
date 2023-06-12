@@ -70,6 +70,7 @@ select * from instrutores;
 select * from planos_de_treinamento;
 select * from instrutores;
 select * from aulas;
+select * from alunos_planos_de_treinamento;
 
 -- DELETE
 DELETE FROM aulas WHERE instrutor_id=4;

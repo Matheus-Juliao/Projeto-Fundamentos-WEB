@@ -172,6 +172,12 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <p>Dashboards</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
                                     <a href="../../logout.php" class="nav-link">

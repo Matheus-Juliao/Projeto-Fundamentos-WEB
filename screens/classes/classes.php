@@ -1,54 +1,55 @@
 
-<?php include 'classes_inserts.php';
+<?php 
+    include 'classes_inserts.php';
 
-if (isset($_GET["success"]) && $_GET["success"] == 0) {
-    if (isset($_GET["message"])) {
-        $message = $_GET["message"];
-        echo $message;
+    if (isset($_GET["success"]) && $_GET["success"] == 0) {
+        if (isset($_GET["message"])) {
+            $message = $_GET["message"];
+            echo $message;
+        }
     }
-}
 
-if (isset($_SESSION['mensagem-sucesso'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-success">
-            <strong class="me-auto">SUCESSO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-sucesso'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto">SUCESSO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-sucesso'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-sucesso'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
+    }
 
-if (isset($_SESSION['mensagem-erro'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-danger">
-            <strong class="me-auto">ERRO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-erro'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger">
+                <strong class="me-auto">ERRO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-erro'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-erro'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
+    }
 
 ?>
 
@@ -172,6 +173,12 @@ if (isset($_SESSION['mensagem-erro'])) {
                                     <a href="../dashboard/dashboard.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Dashboards</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
                                     </a>
                                 </li>
                                 <hr>

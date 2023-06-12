@@ -1,63 +1,64 @@
 
-<?php include 'plans_inserts.php';
-      
-if (isset($_GET["success"]) && $_GET["success"] == 0) {
-    if (isset($_GET["message"])) {
-        $message = $_GET["message"];
-        echo $message;
+<?php
+
+    if (isset($_GET["success"]) && $_GET["success"] == 0) {
+        if (isset($_GET["message"])) {
+            $message = $_GET["message"];
+            echo $message;
+        }
     }
-}
 
-if (isset($_SESSION['mensagem-sucesso'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-success">
-            <strong class="me-auto">SUCESSO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-sucesso'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto">SUCESSO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-sucesso'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-sucesso'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
+    }
 
-if (isset($_SESSION['mensagem-erro'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-danger">
-            <strong class="me-auto">ERRO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-erro'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger">
+                <strong class="me-auto">ERRO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-erro'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-erro'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
+    }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Planos de treinamento</title>
+        <title>Exportação dos dados</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -92,8 +93,8 @@ if (isset($_SESSION['mensagem-erro'])) {
         <!-- Font Awesome -->
         <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
         
-        <!-- Plans CSS -->
-        <link rel="stylesheet" href="../../css/plans.css"> 
+        <!-- Classes CSS -->
+        <link rel="stylesheet" href="../../css/classes.css"> 
     </head>
 
 <body class="hold-transition sidebar-mini">
@@ -114,6 +115,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                 </li>
             </ul>
         </nav>
+        <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -200,7 +202,7 @@ if (isset($_SESSION['mensagem-erro'])) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Planos de Treinamento</h1>
+                        <h1>Exportação dos dados</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -209,56 +211,21 @@ if (isset($_SESSION['mensagem-erro'])) {
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="card">
-                                <!-- /.card-header -->
-                                <div class="card-body table-responsive p-0">
-
-                                <form method="POST" action="plans_inserts.php" class="formulario">
-                                    <!-- Novo campo para o nome do instrutor -->
-                                    <input type="text" name="nome" placeholder="*Nome do plano">
-                                    <input type="text" name="descricao" placeholder="*Descrição">
-                                    <input type="text" name="valor" placeholder="*Valor em R$ Ex: 150.00">
-                                    <!-- Botão para adicionar -->
-                                    <button type="submit">Adicionar</button>
-                                </form>
-                                    <table class="table table-hover text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Editar</th>
-                                                <th>Deletar</th>
-                                                <th>Nome do plano</th>
-                                                <th>Descrição</th>
-                                                <th>Valor/Mês</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    echo "<tr>";
-                                                    echo "<td><a class='btn btn-primary' href='plans_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
-                                                    echo "<td><a class='btn btn-danger' href='plans_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-                                                    echo "<td>" . $row['nome'] . "</td>";
-                                                    echo "<td>" . $row['descricao'] . "</td>";
-                                                    echo "<td>" . $row['valor'] . "</td>";
-                                                    echo "</tr>";
-                                                }
-                                            } else {
-                                                echo "<tr><td colspan='8'>Nenhum plano encontrado na tabela.</td></tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                    <!-- /.row -->
+                    <p>Alunos/Planos: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp                   
+                        <a href="students-plans.php">
+                            <button type="button" class="btn" style="background-color: #90EE90;" >Exportar</button>
+                        </a>
+                    </p>
+                    <p>Instrutores/Usuários: &nbsp          
+                        <a href="instructors-users.php">
+                            <button type="button" class="btn" style="background-color: #90EE90;" >Exportar</button>
+                        </a>
+                    </p>
+                    <p>Aulas/Intrutores: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp           
+                        <a href="classes-instructors.php">
+                            <button type="button" class="btn" style="background-color: #90EE90;" >Exportar</button>
+                        </a>
+                    </p>
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
