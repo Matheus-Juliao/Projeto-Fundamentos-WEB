@@ -7,48 +7,6 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
     }
 }
 
-if (isset($_SESSION['mensagem-sucesso'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-success">
-            <strong class="me-auto">SUCESSO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-sucesso'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
-
-    unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
-}
-
-if (isset($_SESSION['mensagem-erro'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-danger">
-            <strong class="me-auto">ERRO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-erro'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
-
-    unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -98,51 +56,6 @@ if (isset($_SESSION['mensagem-erro'])) {
     <link rel="stylesheet" href="../../css/dashboard.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load("current", { packages: ["corechart"] });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Language', 'Speakers (in millions)'],
-                ['Condicionamento Físico', 34],
-                ['Emagrecimento', 77],
-                ['Musculação', 105],
-                ['Pilates', 56],
-                ['Treinamento de Força', 47],
-                ['Treinamento Funcional', 37],
-                ['Yoga', 60],
-                ['Zumba', 35],
-                ['Natação', 98]
-            ]);
-            // data.addRows([
-            //     <?php
-            //     // Realize a consulta SQL para obter a contagem de alunos por tipo de aula
-            //     $query = "SELECT a.nome, COUNT(ap.aluno_id) as quantidade_alunos
-            //         FROM aulas a
-            //         LEFT JOIN alunos_planos_de_treinamento ap ON a.id = ap.planos_de_treinamento_id
-            //         GROUP BY a.id";
-            //     $result = mysqli_query($conexao, $query);
-
-            //     // Itere sobre os resultados da consulta e adicione as linhas de dados
-            //     while ($row = mysqli_fetch_assoc($result)) {
-            //         echo "['" . $row['nome'] . "', " . $row['quantidade_alunos'] . "],";
-            //     }
-            //     ?>
-            // ]);
-
-            var options = {
-                legend: 'none',
-                pieSliceText: 'label',
-                title: 'Proporção de alunos por aulas',
-                pieStartAngle: 100,
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-            chart.draw(data, options);
-        }
-    </script>
 
     <style>
         .btn-custom-ver-mais {
@@ -262,9 +175,6 @@ if (isset($_SESSION['mensagem-erro'])) {
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
-
-            <!-- Colocar o código aqui -->
-
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-lg-3 col-6">
@@ -301,21 +211,6 @@ if (isset($_SESSION['mensagem-erro'])) {
                             class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
-                <!-- <div class="col-lg-3 col-6"> -->
-                <!-- small box -->
-                <!-- <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>Teste</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div> -->
-                <!-- </div> -->
             </div>
             <!-- /.row -->
             <!-- Main row -->
@@ -331,12 +226,6 @@ if (isset($_SESSION['mensagem-erro'])) {
                             </h3>
                             <div class="card-tools">
                                 <ul class="nav nav-pills ml-auto">
-                                    <!-- <li class="nav-item">
-                                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                                    </li> -->
-                                    <!-- <li class="nav-item">
-                                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                                    </li> -->
                                 </ul>
                             </div>
                         </div><!-- /.card-header -->
@@ -344,21 +233,11 @@ if (isset($_SESSION['mensagem-erro'])) {
                             <div class="tab-content p-0">
                                 <!-- Morris chart - Sales -->
                                 <div class="card-body">
-                                    <!-- <canvas id="inscricoesChart"></canvas> -->
-                                    <div id="chart_div"></div>
-                                    <div id="piechart" style="width: 600px; height: 600px;"></div>
+                                    <div id="chart_div" style="width: 600px; height: 440px;"></div>
                                 </div>
-                                <!-- <div class="chart tab-pane active" id="revenue-chart"
-                                    style="position: relative; height: 300px;">
-                                    <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                                </div> -->
                                 <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 200px;">
-                                    <!-- <canvas id="sales-chart-canvas" height="100" style="height: 100px;"></canvas> -->
                                 </div>
                             </div>
-                            <!-- <div class="card-footer d-flex">
-
-                            </div> -->
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.card -->
@@ -368,7 +247,7 @@ if (isset($_SESSION['mensagem-erro'])) {
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
                 <section class="col-lg-5 connectedSortable larger-card">
                     <!-- Map card -->
-                    <div class="card bg-dark">
+                    <!-- <div class="card bg-dark">
                         <div class="card-header border-0 bg-white">
                             <h3 class="card-title">
                                 <i class="fas fa-map-marker-alt mr-1"></i>
@@ -413,16 +292,13 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer bg-transparent">
+                        <div class="card-footer bg-transparent"> -->
                             <!-- Outros elementos do rodapé do card -->
                         </div>
                     </div>
                     <!-- /.card -->
                 </section>
                 <!-- right col -->
-
-                <!-- Colocar o código aqui -->
-
             </div>
             <!-- /.content-wrapper -->
 
