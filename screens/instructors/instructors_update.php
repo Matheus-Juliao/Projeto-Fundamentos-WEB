@@ -1,61 +1,68 @@
 <?php
-include '../../conexaoMysql.php';
 
-// Verifica se os dados foram enviados através do método POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recupera os dados do formulário
-    $usuario_id = $_POST["usuario_id"];
-    $id = $_POST["id"];
-    $nome = $_POST["nome_instrutor"];
-    $idade = $_POST["idade"];
-    $genero = $_POST["genero"];
-    $telefone = $_POST["telefone"];
-    $endereco = $_POST["endereco"];
-    $especializacao = $_POST["especializacao"];
+    include '../../checkLoginScreens.php';
 
-    // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($usuario_id) || empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especializacao)) {
-        $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
-        exit();
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+
+    include '../../conexaoMysql.php';
+
+    // Verifica se os dados foram enviados através do método POST
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recupera os dados do formulário
+        $usuario_id = $_POST["usuario_id"];
+        $id = $_POST["id"];
+        $nome = $_POST["nome_instrutor"];
+        $idade = $_POST["idade"];
+        $genero = $_POST["genero"];
+        $telefone = $_POST["telefone"];
+        $endereco = $_POST["endereco"];
+        $especializacao = $_POST["especializacao"];
+
+        // Verifica se algum dos campos obrigatórios está vazio
+        if (empty($usuario_id) || empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco) || empty($especializacao)) {
+            $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios.: ' . $conn->error;
+            exit();
+        }
+
+        // Verifica se a conexão foi estabelecida com sucesso
+        if ($conn->connect_error) {
+            die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+        }
+
+        // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
+        $sql = "UPDATE instrutores SET  usuario_id='$usuario_id', nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especializacao='$especializacao' WHERE id='$id'";
+        if ($conn->query($sql) === TRUE) {
+            $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
+            header('Location: instructors.php');
+            exit();
+        } else {
+            $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+        }
     }
 
-    // Verifica se a conexão foi estabelecida com sucesso
-    if ($conn->connect_error) {
-        die("Falha na conexão com o banco de dados: " . $conn->connect_error);
-    }
+    // Recupera o ID do aluno a ser atualizado da URL
+    $id = $_GET["id"];
 
-    // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
-    $sql = "UPDATE instrutores SET  usuario_id='$usuario_id', nome_instrutor='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco', especializacao='$especializacao' WHERE id='$id'";
-    if ($conn->query($sql) === TRUE) {
-        $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
-        header('Location: instructors.php');
-        exit();
+    // Recupera os dados do aluno a partir do ID
+    $sql = "SELECT * FROM instrutores WHERE id='$id'";
+    $result = $conn->query($sql);
+
+    // Consultar os usuarios no banco de dados
+    $sql1 = "SELECT id, nome FROM usuarios";
+    $result1 = $conn->query($sql1);
+
+    // Verifica se o aluno existe
+    if ($result->num_rows > 0) {
+        $instrutores = $result->fetch_assoc();
+        $usuario_id = $instrutores['usuario_id'];
+        $generoSelecionado = $instrutores['genero'];
+        $usuario = $result1;
     } else {
-        $_SESSION['mensagem-erro'] = 'Erro ao atualizar o aluno: ' . $conn->error;
+        echo "Instrutor não encontrado.";
+        exit();
     }
-}
-
-// Recupera o ID do aluno a ser atualizado da URL
-$id = $_GET["id"];
-
-// Recupera os dados do aluno a partir do ID
-$sql = "SELECT * FROM instrutores WHERE id='$id'";
-$result = $conn->query($sql);
-
-// Consultar os usuarios no banco de dados
-$sql1 = "SELECT id, nome FROM usuarios";
-$result1 = $conn->query($sql1);
-
-// Verifica se o aluno existe
-if ($result->num_rows > 0) {
-    $instrutores = $result->fetch_assoc();
-    $usuario_id = $instrutores['usuario_id'];
-    $generoSelecionado = $instrutores['genero'];
-    $usuario = $result1;
-} else {
-    echo "Instrutor não encontrado.";
-    exit();
-}
 
 ?>
 
@@ -174,6 +181,12 @@ if ($result->num_rows > 0) {
                                     <a href="../dashboard/dashboard.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Dashboards</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
                                     </a>
                                 </li>
                                 <hr>

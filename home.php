@@ -1,3 +1,12 @@
+<?php
+    include 'conexaoMysql.php';
+    include 'checkLogin.php';
+
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -115,6 +124,12 @@
                                         <p>Dashboards</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="screens/reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
                                     <a href="logout.php" class="nav-link">
@@ -192,6 +207,17 @@
                                     <p>Visualizar Dashboards</p>
                                 </div>
                                 <a href="screens/dashboard/dashboard.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>Exportação</h3>
+                                    <p>Visualizar relatórios</p>
+                                </div>
+                                <a href="screens/reports/reports.php" class="small-box-footer">Clique aqui<i class="fa-solid fa-person"></i></a>
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,5 @@
 
-<?php 
-    include '../../checkLoginScreens.php';
-
-    $s="select * from usuarios where id='$_SESSION[id]'";
-    $qu= mysqli_query($conn, $s);
-    $f=mysqli_fetch_assoc($qu);
-
-    include 'classes_inserts.php';
+<?php
 
     if (isset($_GET["success"]) && $_GET["success"] == 0) {
         if (isset($_GET["message"])) {
@@ -65,7 +58,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Aulas</title>
+        <title>Exportação dos dados</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -158,7 +151,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="classes.php" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
@@ -209,7 +202,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Aulas</h1>
+                        <h1>Exportação dos dados</h1>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -218,77 +211,21 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="card">
-                                <!-- /.card-header -->
-                                <div class="card-body table-responsive p-0">
-
-                                <form method="POST" action="classes_inserts.php" class="formulario">
-
-                                    <select name="aula">
-                                        <option value="">*Nome da aula</option>
-                                        <option value="Condicionamento físico">Condicionamento físico</option>
-                                        <option value="Emagrecimento">Emagrecimento</option>
-                                        <option value="Musculação">Musculação</option>
-                                        <option value="Pilates">Pilates</option>
-                                        <option value="Treinamento de força">Treinamento de força</option>
-                                        <option value="Treinamento funcional">Treinamento funcional</option>
-                                        <option value="Yoga">Yoga</option>
-                                        <option value="Zumba">Zumba</option>
-                                        <option value="Natação">Natação</option>
-                                    </select>
-
-                                    <select name="id_instrutor" id="instrutores">
-                                        <option value="">*Instrutor</option>
-                                        <?php 
-                                            while ($instrutor = $result1->fetch_assoc()) { 
-                                        ?>
-                                        <option value="<?php echo $instrutor['id']; ?>">
-                                            <?php echo $instrutor['nome_instrutor']; ?></option><?php } ?>
-                                    </select>
-
-                                    <!-- Botão para adicionar -->
-                                    <button type="submit">Adicionar</button>
-                                </form>
-
-
-                                    <table class="table table-hover text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>Editar</th>
-                                                <th>Deletar</th>
-                                                <th>Aula</th>
-                                                <th>Nome do instrutor</th>
-                                                <th>Especialização do instrutor</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                                if ($result->num_rows > 0) {
-                                                    // Exibe os registros em uma tabela
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo "<tr>";
-                                                        echo "<td><a class='btn btn-primary' href='classes_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
-                                                        echo "<td><a class='btn btn-danger' href='classes_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-                                                        echo "<td>" . $row['aula'] . "</td>";
-                                                        echo "<td>" . $row['nome_instrutor'] . "</td>";
-                                                        echo "<td>" . $row['especializacao'] . "</td>";
-                                                    }
-                                                }  else {
-                                                    echo "<tr><td colspan='8'>Nenhum aluno encontrado na tabela.</td></tr>";
-                                                }
-                                            ?>
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                    <!-- /.row -->
+                    <p>Alunos/Planos: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp                   
+                        <a href="students-plans.php">
+                            <button type="button" class="btn" style="background-color: #90EE90;" >Exportar</button>
+                        </a>
+                    </p>
+                    <p>Instrutores/Usuários: &nbsp          
+                        <a href="instructors-users.php">
+                            <button type="button" class="btn" style="background-color: #90EE90;" >Exportar</button>
+                        </a>
+                    </p>
+                    <p>Aulas/Intrutores: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp           
+                        <a href="classes-instructors.php">
+                            <button type="button" class="btn" style="background-color: #90EE90;" >Exportar</button>
+                        </a>
+                    </p>
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
