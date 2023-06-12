@@ -52,39 +52,109 @@ if (isset($_SESSION['mensagem-erro'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Simple Tables</title>
+    <title>Dashboards</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
 
     <!-- dashboard CSS -->
     <link rel="stylesheet" href="../../css/dashboard.css">
 
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Language', 'Speakers (in millions)'],
+                ['Condicionamento Físico', 34],
+                ['Emagrecimento', 77],
+                ['Musculação', 105],
+                ['Pilates', 56],
+                ['Treinamento de Força', 47],
+                ['Treinamento Funcional', 37],
+                ['Yoga', 60],
+                ['Zumba', 35],
+                ['Natação', 98]
+            ]);
+            // data.addRows([
+            //     <?php
+            //     // Realize a consulta SQL para obter a contagem de alunos por tipo de aula
+            //     $query = "SELECT a.nome, COUNT(ap.aluno_id) as quantidade_alunos
+            //         FROM aulas a
+            //         LEFT JOIN alunos_planos_de_treinamento ap ON a.id = ap.planos_de_treinamento_id
+            //         GROUP BY a.id";
+            //     $result = mysqli_query($conexao, $query);
+
+            //     // Itere sobre os resultados da consulta e adicione as linhas de dados
+            //     while ($row = mysqli_fetch_assoc($result)) {
+            //         echo "['" . $row['nome'] . "', " . $row['quantidade_alunos'] . "],";
+            //     }
+            //     ?>
+            // ]);
+
+            var options = {
+                legend: 'none',
+                pieSliceText: 'label',
+                title: 'Proporção de alunos por aulas',
+                pieStartAngle: 100,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+
     <style>
-        .ver-mais-link {
-            color: black;
+        .btn-custom-ver-mais {
+            background-color: green;
+            color: white;
         }
 
-        .larger-card {
-            width: 75%;
+        .btn-custom-ver-mais:hover {
+            background-color: darkgreen;
         }
     </style>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -135,32 +205,39 @@ if (isset($_SESSION['mensagem-erro'])) {
                         <li class="nav-item menu-open">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="students.php" class="nav-link">
+                                    <a href="../students/students.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Alunos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../classes/classes.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Aulas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../instructors/instructors.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Instrutores</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../plans/plans.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
                                 <hr>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../dashboard/dashboard.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Dashboards</p>
+                                    </a>
+                                </li>
+                                <hr>
+                                <li class="nav-item">
+                                    <a href="../../logout.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Sair</p>
                                     </a>
@@ -192,7 +269,7 @@ if (isset($_SESSION['mensagem-erro'])) {
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-info">
+                    <div class="small-box bg-info larger-card">
                         <div class="inner">
                             <h3>
                                 <?php echo $totalAlunos; ?>
@@ -209,10 +286,10 @@ if (isset($_SESSION['mensagem-erro'])) {
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-success larger-card">
                         <div class="inner">
                             <h3>
-                                <?php echo $totalAlunos; ?>
+                                <?php echo $total_instrutores; ?>
                             </h3>
 
                             <p>Intrutores</p>
@@ -220,7 +297,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/instructors/instructors.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/instructors/instructors.php"
+                            class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -253,9 +331,9 @@ if (isset($_SESSION['mensagem-erro'])) {
                             </h3>
                             <div class="card-tools">
                                 <ul class="nav nav-pills ml-auto">
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                                    </li>
+                                    </li> -->
                                     <!-- <li class="nav-item">
                                         <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
                                     </li> -->
@@ -266,31 +344,21 @@ if (isset($_SESSION['mensagem-erro'])) {
                             <div class="tab-content p-0">
                                 <!-- Morris chart - Sales -->
                                 <div class="card-body">
-                                    <canvas id="inscricoesChart"></canvas>
+                                    <!-- <canvas id="inscricoesChart"></canvas> -->
+                                    <div id="chart_div"></div>
+                                    <div id="piechart" style="width: 600px; height: 600px;"></div>
                                 </div>
-                                <div class="chart tab-pane active" id="revenue-chart"
+                                <!-- <div class="chart tab-pane active" id="revenue-chart"
                                     style="position: relative; height: 300px;">
                                     <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                                </div>
-                                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex">
-                                <div class="row">
-                                    <?php
-                                    $ano = date('Y'); // Obter o ano atual
-                                    
-                                    // Loop para percorrer os meses
-                                    for ($mes = 1; $mes <= 12; $mes++) {
-                                        $nome_mes = date('F', mktime(0, 0, 0, $mes, 1)); // Obter o nome do mês
-                                    
-                                        // Exibir o nome do mês
-                                        echo '<div class="col text-center">' . $nome_mes . '</div>';
-                                    }
-                                    ?>
+                                </div> -->
+                                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 200px;">
+                                    <!-- <canvas id="sales-chart-canvas" height="100" style="height: 100px;"></canvas> -->
                                 </div>
                             </div>
+                            <!-- <div class="card-footer d-flex">
+
+                            </div> -->
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.card -->
@@ -298,72 +366,58 @@ if (isset($_SESSION['mensagem-erro'])) {
                 </section>
                 <!-- /.Left col -->
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-7 connectedSortable larger-card">
-
+                <section class="col-lg-5 connectedSortable larger-card">
                     <!-- Map card -->
-                    <div class="card bg-gradient-primary">
-                        <div class="card-header border-0">
+                    <div class="card bg-dark">
+                        <div class="card-header border-0 bg-white">
                             <h3 class="card-title">
                                 <i class="fas fa-map-marker-alt mr-1"></i>
                                 Planos Favoritos!
                             </h3>
-                            <!-- card tools -->
-                            <!-- <div class="card-tools">
-                                <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                                    <i class="far fa-calendar-alt"></i>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
-                                    title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div> -->
-                            <!-- /.card-tools -->
                         </div>
                         <div class="card-body">
-                            <div id="world-map" style="height: 250px; width: 100%;"></div>
-                        </div>
-                        <!-- /.card-body-->
-                        <div class="card-footer bg-transparent">
-                            <div class="row">
+                            <div class="card p-3 mb-3">
                                 <div class="col-4 text-center">
                                     <div class="box-planos">
-                                        <h4>Plano 1</h4>
-                                        <p>Musculação</p>
-                                        <a class="ver-mais-link"
-                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/training-plans/training-plans.php"
-                                            class="small-box-footer">Ver mais <i
-                                                class="fas fa-arrow-circle-right"></i></a>
+                                        <h4>Musculação</h4>
+                                        <p>R$ 100 Semestral</p>
+                                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
+                                            class="btn btn-custom-ver-mais btn-sm ver-mais-link">
+                                            Ver mais <i class="fas fa-arrow-circle-right"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <!-- ./col -->
-                                <div class="col-4 text-center">
-                                    <div class="box-planos">
-                                        <h4>Plano 2</h4>
-                                        <p>Natação</p>
-                                        <a class="ver-mais-link"
-                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/training-plans/training-plans.php"
-                                            class="small-box-footer">Ver mais <i
-                                                class="fas fa-arrow-circle-right"></i></a>
-                                    </div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-4 text-center">
-                                    <div class="box-planos">
-                                        <h4>Plano 3</h4>
-                                        <p>Musculação e Natação</p>
-                                        <a class="ver-mais-link"
-                                            href="http://localhost/Projeto-Fundamentos-WEB/screens/training-plans/training-plans.php"
-                                            class="small-box-footer">Ver mais <i
-                                                class="fas fa-arrow-circle-right"></i></a>
-                                    </div>
-                                </div>
-                                <!-- ./col -->
                             </div>
-                            <!-- /.row -->
+                            <div class="card p-3 mb-3">
+                                <div class="col-4 text-center">
+                                    <div class="box-planos">
+                                        <h4>Natação</h4>
+                                        <p>R$ 120 Semestral</p>
+                                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
+                                            class="btn btn-custom-ver-mais btn-sm ver-mais-link">
+                                            Ver mais <i class="fas fa-arrow-circle-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card p-3">
+                                <div class="col-4 text-center">
+                                    <div class="box-planos">
+                                        <h4>Plano Completo</h4>
+                                        <p>R$ 200 Semestral</p>
+                                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
+                                            class="btn btn-custom-ver-mais btn-sm ver-mais-link">
+                                            Ver mais <i class="fas fa-arrow-circle-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <!-- Outros elementos do rodapé do card -->
                         </div>
                     </div>
                     <!-- /.card -->
-
                 </section>
                 <!-- right col -->
 
