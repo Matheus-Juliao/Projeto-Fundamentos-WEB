@@ -20,9 +20,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Falha na conexão com o banco de dados: " . $conn->connect_error);
         }
 
+        //Verifica se já existe a aula
+        $sql = "SELECT * FROM aulas WHERE nome='$aula'";
+        $resultado = $conn->query($sql);
+        
+        if ($resultado && $resultado->num_rows > 0) {
+            $_SESSION['mensagem-erro'] = 'Aula já cadastrada!';
+            header('Location: classes.php');
+            exit();
+        }
+
         // Prepara e executa a consulta SQL para inserir os dados na tabela de alunos
-        $sql = "INSERT INTO aulas (nome, instrutor_id) VALUES ('$aula', '$id_intrutor')";
-        if ($conn->query($sql) === TRUE) {
+        $sql1 = "INSERT INTO aulas (nome, instrutor_id) VALUES ('$aula', '$id_intrutor')";
+        if ($conn->query($sql1) === TRUE) {
             $_SESSION['mensagem-sucesso'] = 'Aula cadastrada com sucesso!';
             header('Location: classes.php');
             exit();
