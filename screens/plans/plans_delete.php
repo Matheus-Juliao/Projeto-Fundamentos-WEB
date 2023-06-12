@@ -15,7 +15,16 @@
             header('Location: plans.php');
             exit();
         } else {
+            $sql1 = "SELECT * FROM alunos_planos_de_treinamento WHERE planos_de_treinamento_id=$id";
+            if(mysqli_query($conn, $sql1)) {
+                $_SESSION['mensagem-erro'] = 'Para excluir o plano é necessário desviculá-los dos alunos!';
+                header('Location: plans.php');
+                exit();
+            }
+
             $_SESSION['mensagem-erro'] = 'Erro ao excluir registro: ' . $conn->error;
+            header('Location: plans.php');
+            exit();
         }
     }
 ?>

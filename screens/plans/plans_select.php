@@ -17,9 +17,8 @@ if ($result->num_rows > 0) {
         echo "<tr>";
         echo "<td><a class='btn btn-primary' href='plans_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
         echo "<td><a class='btn btn-danger' href='plans_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-        echo "<td>" . $row['id'] . "</td>";
         echo "<td>" . $row['nome'] . "</td>";
-        echo "<td>" . $row['descrição'] . "</td>";
+        echo "<td>" . $row['descricao'] . "</td>";
         echo "<td>" . $row['valor'] . "</td>";
         echo "</tr>";
     }
