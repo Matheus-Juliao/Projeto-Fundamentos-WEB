@@ -1,13 +1,16 @@
+CREATE DATABASE IF NOT EXISTS academia;
+USE academia;
+
 CREATE TABLE usuarios (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(255),
+  nome VARCHAR(255) UNIQUE,
   email VARCHAR(255),
   senha VARCHAR(255)
 );
 
 CREATE TABLE alunos (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_aluno VARCHAR(25) UNIQUE,
+  nome_aluno VARCHAR(25),
   usuario_id INT,
   idade INT NOT NULL,
   genero VARCHAR(10) NOT NULL,
@@ -18,7 +21,7 @@ CREATE TABLE alunos (
 
 CREATE TABLE instrutores (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nome_instrutor VARCHAR(50) UNIQUE,
+  nome_instrutor VARCHAR(50),
   usuario_id INT NOT NULL,
   idade INT NOT NULL,
   genero VARCHAR(10) NOT NULL,
