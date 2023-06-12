@@ -1,11 +1,10 @@
 <?php
+    include '../../conexaoMysql.php';
     include '../../checkLoginScreens.php';
 
     $s="select * from usuarios where id='$_SESSION[id]'";
     $qu= mysqli_query($conn, $s);
     $f=mysqli_fetch_assoc($qu);
-    
-    include '../../conexaoMysql.php';
 
     // Verifica se os dados foram enviados através do método POST
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,7 +15,7 @@
         $genero = $_POST["genero"];
         $telefone = $_POST["telefone"];
         $endereco = $_POST["endereco"];
-        $id_plans = $_POST["id_plans"];
+        $plans = $_POST["plans"];
 
         // Verifica se algum dos campos obrigatórios está vazio
         if (empty($nome) || empty($idade) || empty($genero) || empty($telefone) || empty($endereco)) {
@@ -33,8 +32,8 @@
         $sql = "UPDATE alunos SET nome_aluno='$nome', idade='$idade', genero='$genero', telefone='$telefone', endereco='$endereco' WHERE id='$id'";
         if ($conn->query($sql) === TRUE) {
             // Prepara e executa a consulta SQL para atualizar os dados na tabela de alunos
-            $sql1 = "UPDATE alunos_planos_de_treinamento SET planos_de_treinamento_id=$id_plans' WHERE aluno_id='$id'";
-            if ($conn->query($sql) === TRUE) {
+            $sql1 = "UPDATE alunos_planos_de_treinamento SET planos_de_treinamento_id='$plans' WHERE aluno_id='$id'";
+            if ($conn->query($sql1) === TRUE) {
                 $_SESSION['mensagem-sucesso'] = 'Aluno editado com sucesso!';
                 header('Location: students.php');
                 exit();
@@ -237,7 +236,7 @@
                                     </select>
                         Telefone: <input type="text" name="telefone" value="<?php echo $aluno['telefone']; ?>">
                         Endereço: <input type="text" name="endereco" value="<?php echo $aluno['endereco']; ?>">
-                        Planos: <select class="select" name="id_plans" id="plans">
+                        Planos: <select class="select" name="plans" id="plans">
                                 <?php
                                     while ($plans = $result1->fetch_assoc()) {
                                         $selected = ($plans['id'] == $id_plans) ? 'selected' : '';

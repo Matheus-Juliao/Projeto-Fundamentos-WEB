@@ -1,4 +1,5 @@
 <?php
+    include '../../conexaoMysql.php';
     include '../../checkLoginScreens.php';
 
     $s="select * from usuarios where id='$_SESSION[id]'";
@@ -24,6 +25,16 @@
         // Verifica se a conexão foi estabelecida com sucesso
         if ($conn->connect_error) {
             die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+        }
+
+        //Verifica se já existe a aula
+        $sql = "SELECT * FROM aulas WHERE nome='$aula'";
+        $resultado = $conn->query($sql);
+        
+        if ($resultado && $resultado->num_rows > 0) {
+            $_SESSION['mensagem-erro'] = 'Aula já cadastrada!';
+            header('Location: classes.php');
+            exit();
         }
 
         // Prepara e executa a consulta SQL para atualizar os dados na tabela de aulas
