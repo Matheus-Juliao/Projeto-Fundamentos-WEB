@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 }
 
 // Executa a consulta SQL para selecionar os registros da tabela de alunos
-$sql = "SELECT a.id, a.nome as aula, i.nome_instrutor, i.especializacao FROM aulas a INNER JOIN instrutores i ON a.id = i.id";
+$sql = "SELECT a.id, a.nome as aula, i.nome_instrutor, i.especializacao FROM aulas a INNER JOIN instrutores i ON a.instrutor_id = i.id";
 $result = $conn->query($sql);
 
 // Verifica se a consulta retornou algum resultado

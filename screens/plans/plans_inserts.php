@@ -7,12 +7,12 @@ header('Content-Type: text/html; charset=utf-8');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recupera os dados do formulário
     $nome = $_POST["nome"];
-    $descrição = $_POST["descrição"];
+    $descricao = $_POST["descricao"];
     $valor = $_POST["valor"];
 
 
     // Verifica se algum dos campos obrigatórios está vazio
-    if (empty($nome) || empty($descrição)  || empty($valor)) {
+    if (empty($nome) || empty($descricao)  || empty($valor)) {
         $_SESSION['mensagem-erro'] = 'Todos os campos são obrigatórios!';
         header('Location: plans.php');
         exit();
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Prepara e executa a consulta SQL para inserir os dados na tabela de instrutores
-        $sql = "INSERT INTO planos_de_treinamento (nome, descrição, valor) VALUES ('$nome', '$descrição', '$valor')";
+        $sql = "INSERT INTO planos_de_treinamento (nome, descricao, valor) VALUES ('$nome', '$descricao', '$valor')";
         if ($conn->query($sql) === TRUE) {
             $_SESSION['mensagem-sucesso'] = 'Plano cadastrado com sucesso!';
             header('Location: plans.php');

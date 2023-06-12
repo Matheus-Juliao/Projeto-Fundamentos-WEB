@@ -1,59 +1,66 @@
 
-<?php include 'plans_inserts.php';
+<?php 
+    include '../../checkLoginScreens.php';
+
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+    
+    include 'plans_inserts.php';
       
-if (isset($_GET["success"]) && $_GET["success"] == 0) {
-    if (isset($_GET["message"])) {
-        $message = $_GET["message"];
-        echo $message;
+    if (isset($_GET["success"]) && $_GET["success"] == 0) {
+        if (isset($_GET["message"])) {
+            $message = $_GET["message"];
+            echo $message;
+        }
     }
-}
 
-if (isset($_SESSION['mensagem-sucesso'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-success">
-            <strong class="me-auto">SUCESSO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-sucesso'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto">SUCESSO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-sucesso'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-sucesso'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
+    }
 
-if (isset($_SESSION['mensagem-erro'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-danger">
-            <strong class="me-auto">ERRO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-erro'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger">
+                <strong class="me-auto">ERRO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-erro'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-erro'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
+    }
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -118,7 +125,7 @@ if (isset($_SESSION['mensagem-erro'])) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="../../home.php" class="brand-link">
                 <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
@@ -172,6 +179,12 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <p>Dashboards</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
                                     <a href="../../logout.php" class="nav-link">
@@ -212,8 +225,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                 <form method="POST" action="plans_inserts.php" class="formulario">
                                     <!-- Novo campo para o nome do instrutor -->
                                     <input type="text" name="nome" placeholder="*Nome do plano">
-                                    <input type="text" name="descrição" placeholder="*Descrição">
-                                    <input type="text" name="valor" placeholder="*Valor">
+                                    <input type="text" name="descricao" placeholder="*Descrição">
+                                    <input type="text" name="valor" placeholder="*Valor em R$ Ex: 150.00">
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
                                 </form>
@@ -222,11 +235,9 @@ if (isset($_SESSION['mensagem-erro'])) {
                                             <tr>
                                                 <th>Editar</th>
                                                 <th>Deletar</th>
-                                                <th>ID</th>
                                                 <th>Nome do plano</th>
                                                 <th>Descrição</th>
                                                 <th>Valor/Mês</th>
-                                                <th>Nome do instrutor</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -236,9 +247,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                     echo "<tr>";
                                                     echo "<td><a class='btn btn-primary' href='plans_update.php?id=" . $row['id'] . "'><i class='bi bi-pencil-square'></i></a></td>";
                                                     echo "<td><a class='btn btn-danger' href='plans_delete.php?id=" . $row['id'] . "'><i class='bi bi-trash'></i></a></td>";
-                                                    echo "<td>" . $row['id'] . "</td>";
                                                     echo "<td>" . $row['nome'] . "</td>";
-                                                    echo "<td>" . $row['descrição'] . "</td>";
+                                                    echo "<td>" . $row['descricao'] . "</td>";
                                                     echo "<td>" . $row['valor'] . "</td>";
                                                     echo "</tr>";
                                                 }

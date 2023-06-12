@@ -1,54 +1,61 @@
 
-<?php include 'students_inserts.php';
+<?php 
+    include '../../checkLoginScreens.php';
 
-if (isset($_GET["success"]) && $_GET["success"] == 0) {
-    if (isset($_GET["message"])) {
-        $message = $_GET["message"];
-        echo $message;
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+
+    include 'students_inserts.php';
+
+    if (isset($_GET["success"]) && $_GET["success"] == 0) {
+        if (isset($_GET["message"])) {
+            $message = $_GET["message"];
+            echo $message;
+        }
     }
-}
 
-if (isset($_SESSION['mensagem-sucesso'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-success">
-            <strong class="me-auto">SUCESSO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-sucesso'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success">
+                <strong class="me-auto">SUCESSO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-sucesso'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-sucesso'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-sucesso']); // Limpa a mensagem da sessão
+    }
 
-if (isset($_SESSION['mensagem-erro'])) {
-    echo '
-    <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-danger">
-            <strong class="me-auto">ERRO</strong>
-            <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    if (isset($_SESSION['mensagem-erro'])) {
+        echo '
+        <div style="z-index: 100000;" class="toast position-fixed top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger">
+                <strong class="me-auto">ERRO</strong>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ' . $_SESSION['mensagem-erro'] . '
+            </div>
         </div>
-        <div class="toast-body">
-            ' . $_SESSION['mensagem-erro'] . '
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let toast = new bootstrap.Toast(document.querySelector(".toast"));
-            toast.show();
-        });
-    </script>';
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                let toast = new bootstrap.Toast(document.querySelector(".toast"));
+                toast.show();
+            });
+        </script>';
 
-    unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
-}
+        unset($_SESSION['mensagem-erro']); // Limpa a mensagem da sessão
+    }
 
 ?>
 
@@ -118,7 +125,7 @@ if (isset($_SESSION['mensagem-erro'])) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="../../home.php" class="brand-link">
                 <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
@@ -172,6 +179,12 @@ if (isset($_SESSION['mensagem-erro'])) {
                                         <p>Dashboards</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
+                                    </a>
+                                </li>
                                 <hr>
                                 <li class="nav-item">
                                     <a href="../../logout.php" class="nav-link">
@@ -223,6 +236,15 @@ if (isset($_SESSION['mensagem-erro'])) {
                                     <input type="text" name="telefone" placeholder="*Telefone">
                                     <input type="text" name="endereco" placeholder="*Endereço">
 
+                                    <select name="id_plans" id="plans">
+                                        <option value="">*Planos</option>
+                                        <?php 
+                                            while ($plans = $result1->fetch_assoc()) { 
+                                        ?>
+                                        <option value="<?php echo $plans['id']; ?>">
+                                            <?php echo $plans['nome']; ?></option><?php } ?>
+                                    </select>
+
                                     <!-- Botão para adicionar -->
                                     <button type="submit">Adicionar</button>
                                 </form>
@@ -238,6 +260,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                 <th>Genero</th>
                                                 <th>Telefone</th>
                                                 <th>Endereço</th>
+                                                <th>Planos</th>
+                                                <th>Valor</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -252,6 +276,8 @@ if (isset($_SESSION['mensagem-erro'])) {
                                                     echo "<td>" . $row['genero'] . "</td>";
                                                     echo "<td>" . $row['telefone'] . "</td>";
                                                     echo "<td>" . $row['endereco'] . "</td>";
+                                                    echo "<td>" . $row['nome'] . "</td>";
+                                                    echo "<td>" . $row['valor'] . "</td>";
                                                     echo "</tr>";
                                                 }
                                             } else {
