@@ -1,6 +1,12 @@
 
 <?php
+    include '../../conexaoMysql.php'; 
+    include '../../checkLoginScreens.php';
 
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+    
     if (isset($_GET["success"]) && $_GET["success"] == 0) {
         if (isset($_GET["message"])) {
             $message = $_GET["message"];

@@ -1,6 +1,7 @@
 
 
 <?php
+    include '../../conexaoMysql.php';
     include '../../checkLoginScreens.php';
 
     $s="select * from usuarios where id='$_SESSION[id]'";

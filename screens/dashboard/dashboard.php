@@ -1,17 +1,23 @@
-<?php include 'dashboard_select.php';
+<?php
+    include '../../conexaoMysql.php'; 
+    include '../../checkLoginScreens.php';
 
-if (isset($_GET["success"]) && $_GET["success"] == 0) {
-    if (isset($_GET["message"])) {
-        $message = $_GET["message"];
-        echo $message;
+    $s="select * from usuarios where id='$_SESSION[id]'";
+    $qu= mysqli_query($conn, $s);
+    $f=mysqli_fetch_assoc($qu);
+
+    include 'dashboard_select.php';
+
+    if (isset($_GET["success"]) && $_GET["success"] == 0) {
+        if (isset($_GET["message"])) {
+            $message = $_GET["message"];
+            echo $message;
+        }
     }
-}
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
     <meta charset="utf-8">
@@ -93,7 +99,7 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
+            <a href="../../home.php" class="brand-link">
                 <img src="../../images/logo-biofitness.png" alt="logo-biofitness-2" class="img-circle elevation-3"
                     style="opacity: .8; max-height: 33px;">
                 <span class="brand-text font-weight-light">Bio Fitness</span>
@@ -141,11 +147,16 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                                         <p>Planos de treinamento</p>
                                     </a>
                                 </li>
-                                <hr>
                                 <li class="nav-item">
                                     <a href="../dashboard/dashboard.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Dashboards</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="../reports/reports.php" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Exportação de dados</p>
                                     </a>
                                 </li>
                                 <hr>
@@ -175,48 +186,48 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info larger-card">
-                        <div class="inner">
-                            <h3>
-                                <?php echo $totalAlunos; ?>
-                            </h3>
-                            <p>Alunos</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
-                        </div>
-                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/students/students.php"
-                            class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success larger-card">
-                        <div class="inner">
-                            <h3>
-                                <?php echo $total_instrutores; ?>
-                            </h3>
 
-                            <p>Intrutores</p>
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info larger-card">
+                                <div class="inner">
+                                    <h3>
+                                        <?php echo $totalAlunos; ?>
+                                    </h3>
+                                    <p>Alunos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="../students/students.php"
+                                    class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success larger-card">
+                                <div class="inner">
+                                    <h3>
+                                        <?php echo $total_instrutores; ?>
+                                    </h3>
+
+                                    <p>Intrutores</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="../instructors/instructors.php"
+                                    class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
                         </div>
-                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/instructors/instructors.php"
-                            class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
-            </div>
-            <!-- /.row -->
-            <!-- Main row -->
-            <div class="row d-flex justify-content-between">
-                <!-- Left col -->
-                <section class="col-lg-7 connectedSortable larger-card">
+                    <!-- /.row -->
+
                     <!-- Custom tabs (Charts with tabs)-->
                     <div class="card">
                         <div class="card-header">
@@ -233,7 +244,7 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                             <div class="tab-content p-0">
                                 <!-- Morris chart - Sales -->
                                 <div class="card-body">
-                                    <div id="chart_div" style="width: 600px; height: 440px;"></div>
+                                    <div id="chart_div" style="width: 600px; height: 280px;"></div>
                                 </div>
                                 <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 200px;">
                                 </div>
@@ -241,88 +252,33 @@ if (isset($_GET["success"]) && $_GET["success"] == 0) {
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    <!-- /.card -->
-                </section>
-                <!-- /.Left col -->
-                <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-5 connectedSortable larger-card">
-                    <!-- Map card -->
-                    <!-- <div class="card bg-dark">
-                        <div class="card-header border-0 bg-white">
-                            <h3 class="card-title">
-                                <i class="fas fa-map-marker-alt mr-1"></i>
-                                Planos Favoritos!
-                            </h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="card p-3 mb-3">
-                                <div class="col-4 text-center">
-                                    <div class="box-planos">
-                                        <h4>Musculação</h4>
-                                        <p>R$ 100 Semestral</p>
-                                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
-                                            class="btn btn-custom-ver-mais btn-sm ver-mais-link">
-                                            Ver mais <i class="fas fa-arrow-circle-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card p-3 mb-3">
-                                <div class="col-4 text-center">
-                                    <div class="box-planos">
-                                        <h4>Natação</h4>
-                                        <p>R$ 120 Semestral</p>
-                                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
-                                            class="btn btn-custom-ver-mais btn-sm ver-mais-link">
-                                            Ver mais <i class="fas fa-arrow-circle-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card p-3">
-                                <div class="col-4 text-center">
-                                    <div class="box-planos">
-                                        <h4>Plano Completo</h4>
-                                        <p>R$ 200 Semestral</p>
-                                        <a href="http://localhost/Projeto-Fundamentos-WEB/screens/plans/plans.php"
-                                            class="btn btn-custom-ver-mais btn-sm ver-mais-link">
-                                            Ver mais <i class="fas fa-arrow-circle-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent"> -->
-                            <!-- Outros elementos do rodapé do card -->
-                        </div>
-                    </div>
-                    <!-- /.card -->
-                </section>
-                <!-- right col -->
-            </div>
-            <!-- /.content-wrapper -->
-
-            <footer class="main-footer">
-                <div class="float-right d-none d-sm-block">
-                    <b>Version</b> 1.0.0
-                </div>
-                <strong>Copyright &copy; 2023 <a href="#">Biofitness</a>.</strong> All rights
-                reserved.
-            </footer>
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
         </div>
-        <!-- ./wrapper -->
+        <!-- /.content-wrapper -->
 
-        <!-- jQuery -->
-        <script src="../../plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="../../dist/js/adminlte.min.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="../../dist/js/demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-            </script>
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 1.0.0
+            </div>
+            <strong>Copyright &copy; 2023 <a href="#">Biofitness</a>.</strong> All rights
+            reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
 </body>
 
 </html>
