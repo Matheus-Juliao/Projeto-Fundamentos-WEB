@@ -1,10 +1,10 @@
 
 <?php 
-    include '../../checkLoginScreens.php';
+    // include '../../checkLoginScreens.php';
 
-    $s="select * from usuarios where id='$_SESSION[id]'";
-    $qu= mysqli_query($conn, $s);
-    $f=mysqli_fetch_assoc($qu);
+    // $s="select * from usuarios where id='$_SESSION[id]'";
+    // $qu= mysqli_query($conn, $s);
+    // $f=mysqli_fetch_assoc($qu);
 
     include 'students_inserts.php';
 
