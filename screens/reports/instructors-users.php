@@ -5,7 +5,7 @@
     $html = '';
     $html .= '<table border="1">';
         
-    $html .= '<td colspan="14">Instrutores e usuários</td>';
+    $html .= '<td colspan="7">Instrutores e usuários</td>';
         $html .=  '<tr>';
             $html .= '<td><b>Nome</b></td>';
             $html .= '<td><b>Idade</b></td>';
@@ -38,7 +38,7 @@
     header ("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
     header ("Cache-Control: no-cache, must-revalidate");
     header ("Pragma: no-cache");
-    header ("Content-type: application/x-msexcel");
+    header("Content-type: text/csv; charset=utf-8");
     header ("Content-Disposition: attachment; filename=\"{$arquivo}\"" );
     header ("Content-Description: PHP Generated Data" );
     // Envia o conteúdo do arquivo
